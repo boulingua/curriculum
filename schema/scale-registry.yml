@@ -1,0 +1,806 @@
+# =====================================================================
+#  Boulingua curriculum - CEFR illustrative-scale registry
+#  Authoritative taxonomy of the CEFR Companion Volume (2020) scales.
+#  Source: Council of Europe (2020), CEFR CV, Chapters 3-6 (see docs/sources.md).
+#  Extracted from the CV table of contents; verified against the body text.
+#  scale_id = {DOMAIN}.{slug}. Signing (SIGN) is catalogued but OUT OF SCOPE
+#  for Boulingua (spoken/written languages) - see docs/coverage-gap-report.md.
+# =====================================================================
+
+- scale_id: REC.identifying-cues-and-inferring
+  domain: REC
+  domain_name: Reception
+  scale: identifying-cues-and-inferring
+  official_name: "Identifying Cues And Inferring (Spoken, Signed And Written)"
+  cv_group: "Reception Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: REC.overall-oral-comprehension
+  domain: REC
+  domain_name: Reception
+  scale: overall-oral-comprehension
+  official_name: "Overall Oral Comprehension"
+  cv_group: "Oral Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.overall-reading-comprehension
+  domain: REC
+  domain_name: Reception
+  scale: overall-reading-comprehension
+  official_name: "Overall Reading Comprehension"
+  cv_group: "Reading Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.reading-as-a-leisure-activity
+  domain: REC
+  domain_name: Reception
+  scale: reading-as-a-leisure-activity
+  official_name: "Reading As A Leisure Activity"
+  cv_group: "Reading Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.reading-correspondence
+  domain: REC
+  domain_name: Reception
+  scale: reading-correspondence
+  official_name: "Reading Correspondence"
+  cv_group: "Reading Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.reading-for-information-and-argument
+  domain: REC
+  domain_name: Reception
+  scale: reading-for-information-and-argument
+  official_name: "Reading For Information And Argument"
+  cv_group: "Reading Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.reading-for-orientation
+  domain: REC
+  domain_name: Reception
+  scale: reading-for-orientation
+  official_name: "Reading For Orientation"
+  cv_group: "Reading Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.reading-instructions
+  domain: REC
+  domain_name: Reception
+  scale: reading-instructions
+  official_name: "Reading Instructions"
+  cv_group: "Reading Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.understanding-announcements-and-instructions
+  domain: REC
+  domain_name: Reception
+  scale: understanding-announcements-and-instructions
+  official_name: "Understanding Announcements And Instructions"
+  cv_group: "Oral Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.understanding-as-a-member-of-a-live-audience
+  domain: REC
+  domain_name: Reception
+  scale: understanding-as-a-member-of-a-live-audience
+  official_name: "Understanding As A Member Of A Live Audience"
+  cv_group: "Oral Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.understanding-audio-media-and-recordings
+  domain: REC
+  domain_name: Reception
+  scale: understanding-audio-media-and-recordings
+  official_name: "Understanding Audio (Or Signed) Media And Recordings"
+  cv_group: "Oral Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.understanding-conversation-between-other-people
+  domain: REC
+  domain_name: Reception
+  scale: understanding-conversation-between-other-people
+  official_name: "Understanding Conversation Between Other People"
+  cv_group: "Oral Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: REC.watching-tv-film-and-video
+  domain: REC
+  domain_name: Reception
+  scale: watching-tv-film-and-video
+  official_name: "Watching Tv, Film And Video"
+  cv_group: "Audio-Visual Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.addressing-audiences
+  domain: PROD
+  domain_name: Production
+  scale: addressing-audiences
+  official_name: "Addressing Audiences"
+  cv_group: "Oral Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.compensating
+  domain: PROD
+  domain_name: Production
+  scale: compensating
+  official_name: "Compensating"
+  cv_group: "Production Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: PROD.creative-writing
+  domain: PROD
+  domain_name: Production
+  scale: creative-writing
+  official_name: "Creative Writing"
+  cv_group: "Written Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.monitoring-and-repair
+  domain: PROD
+  domain_name: Production
+  scale: monitoring-and-repair
+  official_name: "Monitoring And Repair"
+  cv_group: "Production Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: PROD.overall-oral-production
+  domain: PROD
+  domain_name: Production
+  scale: overall-oral-production
+  official_name: "Overall Oral Production"
+  cv_group: "Oral Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.overall-written-production
+  domain: PROD
+  domain_name: Production
+  scale: overall-written-production
+  official_name: "Overall Written Production"
+  cv_group: "Written Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.planning
+  domain: PROD
+  domain_name: Production
+  scale: planning
+  official_name: "Planning"
+  cv_group: "Production Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: PROD.public-announcements
+  domain: PROD
+  domain_name: Production
+  scale: public-announcements
+  official_name: "Public Announcements"
+  cv_group: "Oral Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.reports-and-essays
+  domain: PROD
+  domain_name: Production
+  scale: reports-and-essays
+  official_name: "Reports And Essays"
+  cv_group: "Written Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.sustained-monologue-describing-experience
+  domain: PROD
+  domain_name: Production
+  scale: sustained-monologue-describing-experience
+  official_name: "Sustained Monologue: Describing Experience"
+  cv_group: "Oral Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.sustained-monologue-giving-information
+  domain: PROD
+  domain_name: Production
+  scale: sustained-monologue-giving-information
+  official_name: "Sustained Monologue: Giving Information"
+  cv_group: "Oral Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PROD.sustained-monologue-putting-a-case
+  domain: PROD
+  domain_name: Production
+  scale: sustained-monologue-putting-a-case
+  official_name: "Sustained Monologue: Putting A Case (E.G. In A Debate)"
+  cv_group: "Oral Production"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.asking-for-clarification
+  domain: INT
+  domain_name: Interaction
+  scale: asking-for-clarification
+  official_name: "Asking For Clarification"
+  cv_group: "Interaction Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: INT.co-operating
+  domain: INT
+  domain_name: Interaction
+  scale: co-operating
+  official_name: "Co-Operating"
+  cv_group: "Interaction Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: INT.conversation
+  domain: INT
+  domain_name: Interaction
+  scale: conversation
+  official_name: "Conversation"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.correspondence
+  domain: INT
+  domain_name: Interaction
+  scale: correspondence
+  official_name: "Correspondence"
+  cv_group: "Written Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.formal-discussion
+  domain: INT
+  domain_name: Interaction
+  scale: formal-discussion
+  official_name: "Formal Discussion (Meetings)"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.goal-oriented-co-operation
+  domain: INT
+  domain_name: Interaction
+  scale: goal-oriented-co-operation
+  official_name: "Goal-Oriented Co-Operation"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.goal-oriented-online-transactions-and-collaboration
+  domain: INT
+  domain_name: Interaction
+  scale: goal-oriented-online-transactions-and-collaboration
+  official_name: "Goal-Oriented Online Transactions And Collaboration"
+  cv_group: "Online Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.informal-discussion
+  domain: INT
+  domain_name: Interaction
+  scale: informal-discussion
+  official_name: "Informal Discussion (With Friends)"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.information-exchange
+  domain: INT
+  domain_name: Interaction
+  scale: information-exchange
+  official_name: "Information Exchange"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.interviewing-and-being-interviewed
+  domain: INT
+  domain_name: Interaction
+  scale: interviewing-and-being-interviewed
+  official_name: "Interviewing And Being Interviewed"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.notes-messages-and-forms
+  domain: INT
+  domain_name: Interaction
+  scale: notes-messages-and-forms
+  official_name: "Notes, Messages And Forms"
+  cv_group: "Written Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.obtaining-goods-and-services
+  domain: INT
+  domain_name: Interaction
+  scale: obtaining-goods-and-services
+  official_name: "Obtaining Goods And Services"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.online-conversation-and-discussion
+  domain: INT
+  domain_name: Interaction
+  scale: online-conversation-and-discussion
+  official_name: "Online Conversation And Discussion"
+  cv_group: "Online Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.overall-oral-interaction
+  domain: INT
+  domain_name: Interaction
+  scale: overall-oral-interaction
+  official_name: "Overall Oral Interaction"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.overall-written-interaction
+  domain: INT
+  domain_name: Interaction
+  scale: overall-written-interaction
+  official_name: "Overall Written Interaction"
+  cv_group: "Written Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.turntaking
+  domain: INT
+  domain_name: Interaction
+  scale: turntaking
+  official_name: "Turntaking"
+  cv_group: "Interaction Strategies"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: INT.understanding-an-interlocutor
+  domain: INT
+  domain_name: Interaction
+  scale: understanding-an-interlocutor
+  official_name: "Understanding An Interlocutor"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: INT.using-telecommunications
+  domain: INT
+  domain_name: Interaction
+  scale: using-telecommunications
+  official_name: "Using Telecommunications"
+  cv_group: "Oral Interaction"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.acting-as-an-intermediary-in-informal-situations
+  domain: MED
+  domain_name: Mediation
+  scale: acting-as-an-intermediary-in-informal-situations
+  official_name: "Acting As An Intermediary In Informal Situations (With Friends And Colleagues)"
+  cv_group: "Mediating Communication"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.adapting-language
+  domain: MED
+  domain_name: Mediation
+  scale: adapting-language
+  official_name: "Adapting Language"
+  cv_group: "Strategies To Explain A New Concept"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: MED.amplifying-a-dense-text
+  domain: MED
+  domain_name: Mediation
+  scale: amplifying-a-dense-text
+  official_name: "Amplifying A Dense Text"
+  cv_group: "Strategies To Simplify A Text"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: MED.analysis-and-criticism-of-creative-texts
+  domain: MED
+  domain_name: Mediation
+  scale: analysis-and-criticism-of-creative-texts
+  official_name: "Analysis And Criticism Of Creative Texts (Including Literature)"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.breaking-down-complicated-information
+  domain: MED
+  domain_name: Mediation
+  scale: breaking-down-complicated-information
+  official_name: "Breaking Down Complicated Information"
+  cv_group: "Strategies To Explain A New Concept"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: MED.collaborating-to-construct-meaning
+  domain: MED
+  domain_name: Mediation
+  scale: collaborating-to-construct-meaning
+  official_name: "Collaborating To Construct Meaning"
+  cv_group: "Mediating Concepts"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.encouraging-conceptual-talk
+  domain: MED
+  domain_name: Mediation
+  scale: encouraging-conceptual-talk
+  official_name: "Encouraging Conceptual Talk"
+  cv_group: "Mediating Concepts"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.explaining-data
+  domain: MED
+  domain_name: Mediation
+  scale: explaining-data
+  official_name: "Explaining Data"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.expressing-a-personal-response-to-creative-texts
+  domain: MED
+  domain_name: Mediation
+  scale: expressing-a-personal-response-to-creative-texts
+  official_name: "Expressing A Personal Response To Creative Texts (Including Literature)"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.facilitating-collaborative-interaction-with-peers
+  domain: MED
+  domain_name: Mediation
+  scale: facilitating-collaborative-interaction-with-peers
+  official_name: "Facilitating Collaborative Interaction With Peers"
+  cv_group: "Mediating Concepts"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.facilitating-communication-in-delicate-situations-and-disagreements
+  domain: MED
+  domain_name: Mediation
+  scale: facilitating-communication-in-delicate-situations-and-disagreements
+  official_name: "Facilitating Communication In Delicate Situations And Disagreements"
+  cv_group: "Mediating Communication"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.facilitating-pluricultural-space
+  domain: MED
+  domain_name: Mediation
+  scale: facilitating-pluricultural-space
+  official_name: "Facilitating Pluricultural Space"
+  cv_group: "Mediating Communication"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.linking-to-previous-knowledge
+  domain: MED
+  domain_name: Mediation
+  scale: linking-to-previous-knowledge
+  official_name: "Linking To Previous Knowledge"
+  cv_group: "Strategies To Explain A New Concept"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: MED.managing-interaction
+  domain: MED
+  domain_name: Mediation
+  scale: managing-interaction
+  official_name: "Managing Interaction"
+  cv_group: "Mediating Concepts"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.note-taking
+  domain: MED
+  domain_name: Mediation
+  scale: note-taking
+  official_name: "Note-Taking (Lectures, Seminars, Meetings, Etc.)"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.overall-mediation
+  domain: MED
+  domain_name: Mediation
+  scale: overall-mediation
+  official_name: "Overall Mediation"
+  cv_group: "Mediation Activities"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.processing-text
+  domain: MED
+  domain_name: Mediation
+  scale: processing-text
+  official_name: "Processing Text"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.relaying-specific-information
+  domain: MED
+  domain_name: Mediation
+  scale: relaying-specific-information
+  official_name: "Relaying Specific Information"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: MED.streamlining-a-text
+  domain: MED
+  domain_name: Mediation
+  scale: streamlining-a-text
+  official_name: "Streamlining A Text"
+  cv_group: "Strategies To Simplify A Text"
+  is_strategy: true
+  in_scope: true
+
+- scale_id: MED.translating-a-written-text
+  domain: MED
+  domain_name: Mediation
+  scale: translating-a-written-text
+  official_name: "Translating A Written Text"
+  cv_group: "Mediating A Text"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PLUR.building-on-pluricultural-repertoire
+  domain: PLUR
+  domain_name: Plurilingual and pluricultural competence
+  scale: building-on-pluricultural-repertoire
+  official_name: "Building On Pluricultural Repertoire"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PLUR.building-on-plurilingual-repertoire
+  domain: PLUR
+  domain_name: Plurilingual and pluricultural competence
+  scale: building-on-plurilingual-repertoire
+  official_name: "Building On Plurilingual Repertoire"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PLUR.plurilingual-comprehension
+  domain: PLUR
+  domain_name: Plurilingual and pluricultural competence
+  scale: plurilingual-comprehension
+  official_name: "Plurilingual Comprehension"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: LING.general-linguistic-range
+  domain: LING
+  domain_name: Linguistic competence
+  scale: general-linguistic-range
+  official_name: "General Linguistic Range"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: LING.grammatical-accuracy
+  domain: LING
+  domain_name: Linguistic competence
+  scale: grammatical-accuracy
+  official_name: "Grammatical Accuracy"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: LING.orthographic-control
+  domain: LING
+  domain_name: Linguistic competence
+  scale: orthographic-control
+  official_name: "Orthographic Control"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: LING.phonological-control
+  domain: LING
+  domain_name: Linguistic competence
+  scale: phonological-control
+  official_name: "Phonological Control"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: LING.vocabulary-control
+  domain: LING
+  domain_name: Linguistic competence
+  scale: vocabulary-control
+  official_name: "Vocabulary Control"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: LING.vocabulary-range
+  domain: LING
+  domain_name: Linguistic competence
+  scale: vocabulary-range
+  official_name: "Vocabulary Range"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: SOC.sociolinguistic-appropriateness
+  domain: SOC
+  domain_name: Sociolinguistic competence
+  scale: sociolinguistic-appropriateness
+  official_name: "Sociolinguistic Appropriateness"
+  cv_group: "Sociolinguistic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PRAG.coherence-and-cohesion
+  domain: PRAG
+  domain_name: Pragmatic competence
+  scale: coherence-and-cohesion
+  official_name: "Coherence And Cohesion"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PRAG.flexibility
+  domain: PRAG
+  domain_name: Pragmatic competence
+  scale: flexibility
+  official_name: "Flexibility"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PRAG.fluency
+  domain: PRAG
+  domain_name: Pragmatic competence
+  scale: fluency
+  official_name: "Fluency"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PRAG.propositional-precision
+  domain: PRAG
+  domain_name: Pragmatic competence
+  scale: propositional-precision
+  official_name: "Propositional Precision"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PRAG.thematic-development
+  domain: PRAG
+  domain_name: Pragmatic competence
+  scale: thematic-development
+  official_name: "Thematic Development"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: PRAG.turntaking
+  domain: PRAG
+  domain_name: Pragmatic competence
+  scale: turntaking
+  official_name: "Turntaking"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: true
+
+- scale_id: SIGN.diagrammatical-accuracy
+  domain: SIGN
+  domain_name: Signing competences
+  scale: diagrammatical-accuracy
+  official_name: "Diagrammatical Accuracy"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.language-awareness-and-interpretation
+  domain: SIGN
+  domain_name: Signing competences
+  scale: language-awareness-and-interpretation
+  official_name: "Language Awareness And Interpretation"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.presence-and-effect
+  domain: SIGN
+  domain_name: Signing competences
+  scale: presence-and-effect
+  official_name: "Presence And Effect"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.processing-speed
+  domain: SIGN
+  domain_name: Signing competences
+  scale: processing-speed
+  official_name: "Processing Speed"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.setting-and-perspectives
+  domain: SIGN
+  domain_name: Signing competences
+  scale: setting-and-perspectives
+  official_name: "Setting And Perspectives"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.sign-language-repertoire
+  domain: SIGN
+  domain_name: Signing competences
+  scale: sign-language-repertoire
+  official_name: "Sign Language Repertoire"
+  cv_group: "Linguistic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.sign-text-structure
+  domain: SIGN
+  domain_name: Signing competences
+  scale: sign-text-structure
+  official_name: "Sign Text Structure"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.signing-fluency
+  domain: SIGN
+  domain_name: Signing competences
+  scale: signing-fluency
+  official_name: "Signing Fluency"
+  cv_group: "Pragmatic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."
+
+- scale_id: SIGN.sociolinguistic-appropriateness-and-cultural-repertoire
+  domain: SIGN
+  domain_name: Signing competences
+  scale: sociolinguistic-appropriateness-and-cultural-repertoire
+  official_name: "Sociolinguistic Appropriateness And Cultural Repertoire"
+  cv_group: "Sociolinguistic Competence"
+  is_strategy: false
+  in_scope: false
+  out_of_scope_reason: "Signing competence - Boulingua covers spoken/written languages only."

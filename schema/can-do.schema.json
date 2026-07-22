@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://boulingua.github.io/curriculum/schema/can-do.schema.json",
+  "title": "Boulingua Can-Do statement",
+  "description": "One operational Can-Do statement implementing a CEFR CV (2020) descriptor. Every statement MUST be grounded via a resolvable implements: reference.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "can_do", "implements", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(preA1|A1|A2|B1|B2|C1|C2)\\.(REC|PROD|INT|MED|PLUR|LING|SOC|PRAG)\\.[a-z0-9-]+\\.[0-9]{2}$",
+      "description": "{LEVEL}.{DOMAIN}.{SCALE}.{SEQ} — see docs/id-scheme.md"
+    },
+    "can_do": {
+      "type": "string",
+      "minLength": 12,
+      "description": "Boulingua's own operational statement. A reformulation implementing the official descriptor — never a verbatim copy of the CV scale."
+    },
+    "implements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "domain", "scale", "level", "descriptor_ordinal"],
+      "properties": {
+        "source": { "type": "string", "enum": ["cefr-cv-2020", "cefr-2001"], "description": "resolves to a docs/sources.md entry" },
+        "domain": { "type": "string", "enum": ["REC", "PROD", "INT", "MED", "PLUR", "LING", "SOC", "PRAG"] },
+        "scale": { "type": "string", "description": "leaf scale slug present in schema/scale-registry.yml" },
+        "level": { "type": "string", "enum": ["preA1", "A1", "A2", "B1", "B2", "C1", "C2"] },
+        "descriptor_ordinal": { "type": "integer", "minimum": 1, "description": "position of the implemented descriptor within (scale, level)" },
+        "modality": { "type": "string", "enum": ["speech-sign", "writing"], "description": "only for two-column mediation scales" }
+      }
+    },
+    "cite": {
+      "type": "string",
+      "description": "human-readable attributed citation of the official descriptor"
+    },
+    "quote": {
+      "type": "string",
+      "maxLength": 120,
+      "description": "optional brief (<= ~15 words) attributed quotation of official wording where pedagogically load-bearing"
+    },
+    "status": { "type": "string", "enum": ["active", "deprecated"] },
+    "superseded_by": { "type": "string", "description": "required when status = deprecated" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "deprecated" } } },
+      "then": { "required": ["superseded_by"] }
+    }
+  ]
+}
