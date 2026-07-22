@@ -26,7 +26,8 @@ root = sys.argv[1]
 ID_RE = re.compile(r'^(preA1|A1|A2|B1|B2|C1|C2)\.(REC|PROD|INT|MED|PLUR|LING|SOC|PRAG)\.[a-z0-9-]+\.[0-9]{2}$')
 
 reg = yaml.safe_load(open(os.path.join(root, "schema/scale-registry.yml"))) or []
-inscope = {e["scale"] for e in reg if e.get("in_scope")}
+# key on (domain, scale): a slug like "turntaking" exists in both INT and PRAG
+inscope = {(e["domain"], e["scale"]) for e in reg if e.get("in_scope")}
 
 errors = []
 seen = {}
@@ -68,8 +69,8 @@ for path in sorted(glob.glob(os.path.join(root, "levels/*.md"))):
             errors.append(f"{f}: {sid} implements.scale '{imp.get('scale')}' != id scale '{scale}'")
         if imp.get("level") != lvl:
             errors.append(f"{f}: {sid} implements.level '{imp.get('level')}' != id level '{lvl}'")
-        if imp.get("scale") not in inscope:
-            errors.append(f"{f}: {sid} scale '{imp.get('scale')}' not an in-scope registry scale")
+        if (dom, imp.get("scale")) not in inscope:
+            errors.append(f"{f}: {sid} ({dom}, '{imp.get('scale')}') not an in-scope registry scale")
 
 print(f"id-audit: checked {count} statement(s) across levels/, {len(inscope)} in-scope scales")
 if errors:

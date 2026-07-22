@@ -1,0 +1,38 @@
+# German A1 — reference instantiation (conformance example)
+#
+# Demonstrates how a language instantiation (e.g. the `daf` repo) declares
+# conformance against this framework: it names the framework version, the
+# conformance level it targets, and maps its own realizations to curriculum
+# descriptor IDs. Every `implements_id` below MUST resolve to a statement in
+# curriculum/levels/ (checked by scripts/id-audit.sh via docs/verification.md).
+#
+# This is a *starter* example, deliberately partial: a real A1 instantiation
+# implements every in-scope scale that has an A1 descriptor. See README.md.
+
+framework: boulingua-curriculum
+framework_version: 1.0.0
+language: de
+level: A1
+declared_conformance: partial          # example subset, not full A1 coverage
+note: >
+  Reference example only. The authoritative German instantiation lives in the
+  `daf` repo; this file exists so the framework's conformance mechanism and the
+  §7 "German A1 example" verification item are demonstrable and testable.
+
+realizations:
+  - implements_id: A1.REC.overall-oral-comprehension.01
+    de: "Kann sehr langsam und sorgfältig artikulierte Sprache mit langen Pausen verstehen."
+  - implements_id: A1.REC.overall-reading-comprehension.01
+    de: "Kann vertraute Namen, Wörter und ganz einfache Sätze verstehen, z. B. auf Schildern, Plakaten oder in Katalogen."
+  - implements_id: A1.PROD.overall-oral-production.01
+    de: "Kann einfache Wendungen und Sätze benutzen, um die eigene Person und vertraute Menschen zu beschreiben."
+  - implements_id: A1.INT.conversation.01
+    de: "Kann sich auf einfache Art verständigen, wenn die Gesprächspartnerin oder der Gesprächspartner langsam spricht und hilft."
+  - implements_id: A1.INT.information-exchange.01
+    de: "Kann einfache Fragen zu Person und Alltag stellen und auf ebensolche Fragen antworten."
+  - implements_id: A1.INT.overall-written-interaction.01
+    de: "Kann kurze, einfache Mitteilungen, Notizen und Postkarten schreiben."
+  - implements_id: A1.LING.general-linguistic-range.01
+    de: "Kann ein Grundinventar einfacher Wendungen zu konkreten, alltäglichen Situationen einsetzen."
+  - implements_id: A1.SOC.sociolinguistic-appropriateness.01
+    de: "Kann einfache, alltägliche Höflichkeitsformen der Begrüßung und Anrede verwenden."
