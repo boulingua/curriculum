@@ -4,13 +4,15 @@
 # conformance against this framework: it names the framework version, the
 # conformance level it targets, and maps its own realizations to curriculum
 # descriptor IDs. Every `implements_id` below MUST resolve to a statement in
-# curriculum/levels/ (checked by scripts/id-audit.sh via docs/verification.md).
+# curriculum/levels/ — checked by `conformance_audit.py resolve`, which is what
+# CI runs. id-audit.sh could never do this: it globs THIS repo's levels/ and
+# has no way to be pointed at a consumer manifest.
 #
 # This is a *starter* example, deliberately partial: a real A1 instantiation
 # implements every in-scope scale that has an A1 descriptor. See README.md.
 
 framework: boulingua-curriculum
-framework_version: 1.0.0
+framework_version: 1.1.0
 language: de
 level: A1
 declared_conformance: partial          # example subset, not full A1 coverage

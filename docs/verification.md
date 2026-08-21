@@ -10,7 +10,7 @@ Evidence for each requirement. Reproduce the audit with `bash scripts/id-audit.s
 - [x] **ID audit passes** — unique, well-formed, fully resolved (`scripts/id-audit.sh`).
 - [x] **Rubrics traceable to Table 3 / CV analytic scales** — `assessment/rubrics/speaking-analytic.md` bands the six Appendix 3 aspects via their CV scales.
 - [x] **Sources archived with checksums and retrieval dates** — `docs/sources.md` (CV2020 EN/FR + DE-2018 + Sign; SHA-256; retrieved 2026-07-22, browser method).
-- [ ] **German A1 example passes conformance at declared level** — `examples/de-a1/conformance.yml` — 8 realizations. Not evidenced: no check resolves them. `scripts/id-audit.sh` audits this repo's own `levels/*.md` and cannot read a consumer manifest, so nothing in CI verifies this box. Re-checked when the consumer resolver ships in F9.
+- [x] **German A1 example passes conformance at declared level** — `examples/de-a1/conformance.yml` — 8 realizations, all resolving. Verified by `conformance_audit.py resolve --manifest examples/de-a1/conformance.yml --content examples/de-a1/`, which CI runs. This box was ticked for months against a check nothing performed: `id-audit.sh` globs this repo's own levels/ and cannot read a consumer manifest.
 
 ## Numbers
 
