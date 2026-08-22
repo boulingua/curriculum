@@ -1,0 +1,122 @@
+# The per-page `curriculum:` block. One vocabulary, used by all eighteen courses.
+#
+# WHAT THIS REPLACES. front-matter-fields.md modelled `framework: cefr |
+# bildungsplan-bw` as mutually exclusive alternatives. They are not
+# alternatives — they are orthogonal axes. The Bildungsplan is a state
+# syllabus; the boulingua curriculum is a descriptor catalogue. efl and fle
+# need both at once, which is precisely why both carry a `bildungsplan:` block
+# and zero CEFR ids today: the schema made them choose, and they chose the one
+# their Ministry asks about.
+#
+# So: ONE framework, `boulingua-curriculum`, plus zero or more secondary
+# anchors (ADR-0012). The enum values `cefr` and `bildungsplan-bw` are removed.
+
+version: 1.1.0
+
+curriculum:
+  framework:
+    const: boulingua-curriculum
+    note: >-
+      A constant, not a choice. The framework is the descriptor catalogue;
+      everything else on this page is an anchor into some other scheme.
+
+  level:
+    type: string
+    enum: [preA1, A1, A2, B1, B2, C1, C2]
+    required_on: [unit, exam]
+    note: Replaces the old top-level `cefr_level`.
+
+  implements:
+    type: list
+    items: descriptor-id            # {LEVEL}.{DOMAIN}.{scale}.{NN}
+    min: 3
+    max: 6
+    required_on: [unit, exam]
+    note: >-
+      REQUIRED and non-empty. This single field is what converts conformance
+      from prose into enforcement — before it, a course could claim any level
+      and nothing could contradict it.
+
+      At least one id must come from a domain other than the page's primary
+      skill domain, evaluated against the eight-domain enum. That rule exists
+      to force breadth: a unit that only ever implements REC descriptors is a
+      reading exercise wearing a unit's clothes.
+
+      It cannot be generated. The whole value of `implements` is that a human
+      asserted the mapping; a script that guessed would produce a conformance
+      claim nobody had made. `conformance_audit.py suggest` ranks candidates
+      from the page's skills_focus and Bildungsplan codes so the author is
+      confirming rather than searching, which is the difference between ten
+      minutes a page and thirty.
+
+  can_do:
+    type: list
+    items:
+      id: descriptor-id             # must appear in `implements`
+      text: string                  # the COURSE'S OWN wording, in its own language
+    note: >-
+      Optional, and bound to an id. The text is the course's own formulation —
+      not framework text copied down. That separation is what keeps Council of
+      Europe wording out of eighteen repositories and makes a copied string
+      structurally obvious.
+
+  bildungsplan:                     # efl and fle only
+    plan: string                    # e.g. bw-2016-englisch
+    niveau: { enum: [G, M, E] }
+    klassenstufe: integer
+    track: { enum: [g, m, e, gm] }
+    codes: { type: list, items: string }        # e.g. 3.2.3.2
+    topic_codes: { type: list, items: string }  # Orientierungswissen
+    note: >-
+      A secondary anchor, carried alongside `implements` and never instead of
+      it. topic_codes have no CEFR counterpart at all, which is one reason the
+      two schemes cannot be modelled as alternatives.
+
+      Bildungsplan codes MUST NOT be mirrored into `tags:`. efl does this today
+      — 816 of its 1,356 tag occurrences are numeric codes, producing taxonomy
+      terms like /tags/3-2-3-7/ — and a syllabus reference is not a topic a
+      learner browses by.
+
+# ── skills_focus: one enum, eight values, English ──────────────────────────
+skills_focus:
+  type: list
+  enum: [reading, listening, speaking_interaction, speaking_production,
+         writing, mediation, language_awareness, intercultural]
+  note: >-
+    Three vocabularies today: efl has 7 English values, daf 6 German, fle 11
+    French-and-German with genuine variants. efl's and daf's are clean
+    one-to-one lookups. fle's contain a real intra-field split —
+    hör_hörsehverstehen (18 pages) against hoerverstehen (2) — plus three
+    singletons, and non-ASCII in a taxonomy key that reaches URLs.
+
+    `speaking` cannot be split mechanically. Whether a unit's speaking is
+    interaction or production is decided from its `implements`: an INT.* id
+    implies interaction, PROD.* production. So that half of the migration lands
+    AFTER a unit's implements tranche, never before — the one place where
+    descriptor ids drive the migration rather than follow it.
+
+# ── The repo-root manifest ─────────────────────────────────────────────────
+manifest:
+  framework: { const: boulingua-curriculum }
+  framework_version: string
+  language: string
+  declared_conformance: { enum: [core, core-restricted, full, complete] }
+  conformance_status: { enum: [in-progress, met] }
+  note: >-
+    Two fields, because they are two facts. `declared_conformance` is the
+    TARGET; `conformance_status` is whether it has been reached. Collapsing
+    them — as an earlier draft did, by accepting `partial` as a level — makes
+    "aiming at core and not there yet" indistinguishable from a lesser target.
+    A course does not aim at partial.
+  realizations:
+    type: list
+    items:
+      implements_id: descriptor-id
+      text: string                  # ONE field, not eighteen per-language keys
+      page: string                  # content path, no extension
+    note: >-
+      `page` is a content path and deliberately never a URL. If the conformance
+      layer referenced URLs it would become a second reason to re-slug, and a
+      re-slug orphans registered VG Wort marks.
+  gaps: { type: list, note: "in-scope cells not yet covered, declared honestly" }
+  out_of_scope: { type: list, note: "cells this course will never cover, with reasons" }

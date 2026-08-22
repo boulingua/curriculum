@@ -15,7 +15,13 @@ framework: boulingua-curriculum
 framework_version: 1.1.0
 language: de
 level: A1
-declared_conformance: partial          # example subset, not full A1 coverage
+declared_conformance: core             # the TARGET span (A1-B1)
+conformance_status: in-progress        # whether it has been reached.
+                                       # `partial` used to live in the field
+                                       # above, which made 'aiming at core and
+                                       # not there yet' indistinguishable from
+                                       # a lesser target. A course does not aim
+                                       # at partial.
 note: >
   Reference example only. The authoritative German instantiation lives in the
   `daf` repo; this file exists so the framework's conformance mechanism and the

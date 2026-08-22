@@ -45,13 +45,14 @@ LEVELS = ["preA1", "A1", "A2", "B1", "B2", "C1", "C2"]
 SPANS = {"core": ["A1", "A2", "B1"],
          "core-restricted": ["A1", "A2", "B1"],
          "full": ["A1", "A2", "B1", "B2", "C1"],
-         "complete": LEVELS,
-         # `partial` claims correctness, not coverage: every id must resolve
-         # (exit 3 still applies) but no level is asserted, so the coverage
-         # check is skipped rather than failed. A deliberately partial example
-         # is not the same thing as a course that fell short, and reporting
-         # them identically would make exit 5 meaningless.
-         "partial": LEVELS}
+         "complete": LEVELS}
+
+# `declared_conformance` is the TARGET. Whether it has been reached is a
+# separate field, `conformance_status`, and conflating them was the error in an
+# earlier pass of this file: `partial` was accepted as a level, which made
+# "aiming at core and not there yet" indistinguishable from a different, lesser
+# target. A course does not aim at partial.
+STATUSES = {"in-progress", "met"}
 # Eight domains. LING and PRAG are real ones, and any grep written from a
 # five-domain assumption misses them silently.
 DOMAINS = ["REC", "PROD", "INT", "MED", "PLUR", "LING", "SOC", "PRAG"]
@@ -251,9 +252,19 @@ def cmd_resolve(a) -> int:
             return 4
 
     # ── coverage against the declared level ───────────────────────────────
-    if declared == "partial":
-        print(f"  {len(claimed)} realizations resolve, framework {version}")
-        print("resolve OK — partial: ids verified, no coverage claimed")
+    # in-progress: every id must still be correct (exit 3 applies in full), but
+    # coverage is not yet asserted, so a shortfall is reported and not failed.
+    # This is what makes the per-level backfill tranches possible — a tranche
+    # that is not done must not block one that is.
+    status = man.get("conformance_status", "in-progress")
+    if status not in STATUSES:
+        print(f"::error::conformance_status {status!r} is not one of "
+              f"{sorted(STATUSES)}", file=sys.stderr)
+        return 2
+    if status == "in-progress":
+        print(f"  {len(claimed)} realizations resolve, targeting {declared}, "
+              f"framework {version}")
+        print("resolve OK — in-progress: ids verified, coverage not yet claimed")
         return 0
 
     pop, _ = cells()
