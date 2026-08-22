@@ -42,10 +42,17 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 LEVELS = ["preA1", "A1", "A2", "B1", "B2", "C1", "C2"]
+# preA1 is NOT in any span. It is counted separately and added to a course's
+# denominator only when that course lists it in levels_claimed — most do not,
+# because preA1 is a literacy-and-first-contact level that a Klasse 5 English
+# course has no reason to claim. Folding it into `complete` made that span 441
+# where the framework defines it as 412, which would have understated every
+# course's coverage by the 29 cells it never intended to cover.
 SPANS = {"core": ["A1", "A2", "B1"],
          "core-restricted": ["A1", "A2", "B1"],
          "full": ["A1", "A2", "B1", "B2", "C1"],
-         "complete": LEVELS}
+         "complete": ["A1", "A2", "B1", "B2", "C1", "C2"]}
+PREA1 = "preA1"
 
 # `declared_conformance` is the TARGET. Whether it has been reached is a
 # separate field, `conformance_status`, and conflating them was the error in an
