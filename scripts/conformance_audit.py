@@ -353,18 +353,96 @@ def cmd_explain(a) -> int:
     return 3
 
 
+SKILL_DOMAIN = {"reading": "REC", "listening": "REC", "speaking_interaction": "INT",
+                "speaking_production": "PROD", "writing": "PROD", "mediation": "MED",
+                "language_awareness": "LING", "intercultural": "SOC"}
+STOP = set("""der die das ein eine und oder aber ich kann nicht mit von zu in an auf
+für über the a an and or but can i not with from to in on for of about""".split())
+
+
+def words(text: str) -> set[str]:
+    return {w for w in re.findall(r"[\wäöüßÄÖÜ]{4,}", (text or "").lower())
+            if w not in STOP}
+
+
 def cmd_suggest(a) -> int:
-    n = 0
+    """Rank the catalogue against ONE page, or list a level when given no page.
+
+    This used to print the first N entries at a level in file order. It read no
+    page, saw no skills_focus, and ranked nothing — so the programme's estimate
+    that assigning implements costs ten minutes a page rather than thirty rested
+    on a filter, not on a suggestion. An author still had to read the catalogue.
+
+    It cannot choose the ids. That is the point of `implements` — a human
+    asserted the mapping, and a script that guessed would put a conformance
+    claim in a manifest that nobody made. What it can do is put the plausible
+    candidates at the top, which is the difference between confirming and
+    searching.
+    """
+    page_terms, page_skills, page_level = set(), [], None
+    if a.page:
+        raw = Path(a.page).read_text(encoding="utf-8", errors="replace")
+        m = re.match(r"\A---\n(.*?)\n---\n(.*)", raw, re.S)
+        if not m:
+            print(f"::error::{a.page} has no front matter", file=sys.stderr)
+            return 2
+        fm = yaml.safe_load(m.group(1)) or {}
+        page_skills = [str(x) for x in (fm.get("skills_focus") or [])]
+        page_level = (fm.get("curriculum") or {}).get("level") or fm.get("cefr_level")
+        page_terms = words(m.group(2)[:4000]) | words(str(fm.get("title", "")))
+        for c in (fm.get("cefr_can_do") or []):
+            page_terms |= words(str(c))
+
+    level = a.level or page_level
+    if not level:
+        print("::error::give --level, or a --page carrying curriculum.level or "
+              "cefr_level", file=sys.stderr)
+        return 2
+
+    want = {SKILL_DOMAIN[s] for s in page_skills if s in SKILL_DOMAIN}
+    unmapped = [s for s in page_skills if s not in SKILL_DOMAIN]
+
+    scored = []
     for st in load_statements():
         imp = st.get("implements", {})
-        if imp.get("level") == a.level and (not a.domain or imp.get("domain") == a.domain):
-            print(f"  {st['id']}\n      {st.get('can_do','')}")
-            n += 1
-            if n >= a.limit:
-                break
-    if not n:
-        print(f"  no statements at level {a.level}"
+        if imp.get("level") != level:
+            continue
+        dom = imp.get("domain")
+        if a.domain and dom != a.domain:
+            continue
+        text = st.get("can_do", "")
+        overlap = len(page_terms & words(text)) if page_terms else 0
+        # Domain match is worth more than any single shared word: a unit's
+        # skills are asserted by its author, its wording is incidental.
+        score = (3 if dom in want else 0) + overlap
+        scored.append((score, overlap, dom in want, st["id"], text))
+
+    if not scored:
+        print(f"  no statements at level {level}"
               + (f" in domain {a.domain}" if a.domain else ""))
+        return 0
+
+    scored.sort(key=lambda z: (-z[0], z[3]))
+    if a.page:
+        print(f"  {Path(a.page).name} — level {level}, skills {page_skills or '(none)'}")
+        if unmapped:
+            print(f"  ::warning::{unmapped} maps to no domain, so nothing was "
+                  f"ranked up for it. Split it first, or these suggestions are "
+                  f"blind to half the page.")
+        print(f"  ranked against {len(page_terms)} term(s) from the page body, "
+              f"title and cefr_can_do\n")
+    for score, overlap, dommatch, sid, text in scored[:a.limit]:
+        why = []
+        if dommatch:
+            why.append("domain matches skills_focus")
+        if overlap:
+            why.append(f"{overlap} shared term(s)")
+        tag = f"   [{', '.join(why)}]" if why else ""
+        print(f"  {sid}{tag}\n      {text}")
+    if a.page and not any(z[0] for z in scored[:a.limit]):
+        print("\n  ::warning::nothing scored above zero — no domain matched and no "
+              "term overlapped. These are the catalogue in file order, which is "
+              "what this command used to print unconditionally.")
     return 0
 
 
@@ -382,7 +460,10 @@ def main() -> int:
     e = sub.add_parser("explain")
     e.add_argument("id")
     s = sub.add_parser("suggest")
-    s.add_argument("--level", required=True)
+    s.add_argument("--level", default=None,
+                   help="omit when --page carries curriculum.level or cefr_level")
+    s.add_argument("--page", default=None, type=str,
+                   help="rank the catalogue against this content file")
     s.add_argument("--domain", default=None)
     s.add_argument("--limit", type=int, default=10)
     a = ap.parse_args()
