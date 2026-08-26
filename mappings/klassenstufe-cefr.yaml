@@ -1,0 +1,84 @@
+# Klassenstufe → CEFR, per course. The table `curriculum.level` is written from.
+#
+# WHY THIS IS A FILE AND NOT A CONSTANT IN A SCRIPT. Which Klasse reaches B1 is
+# a statement about a specific curriculum in a specific Bundesland, and it is
+# the kind of claim that gets revised. It is reviewable here, in one place, with
+# its derivation written next to it — and a script that hard-coded it would put
+# a pedagogical judgement somewhere nobody would think to look for one.
+#
+# Sources: KMK Bildungsstandards für die fortgeführte Fremdsprache (2012) and
+# the Bildungsplan Baden-Württemberg 2016, whose Standardstufen carry published
+# CEFR targets.
+
+# ── efl: DERIVED, not proposed ───────────────────────────────────────────────
+#
+# English as 1. Fremdsprache from Klasse 5. Its level comes from the
+# Bildungsplan Standardstufe the author already assigned to each page, not from
+# the Klassenstufe — measured across all 360 pages, the correlation is exact:
+#
+#     Kl 5, 6      -> 3.1   100%
+#     Kl 7, 8, 9   -> 3.2   100%
+#     Kl 10        -> 3.3   100%
+#     Kl 11,12,13  -> 3.4 / 3.5   50/50
+#
+# So this is the author's own level assignment read back out, which is a much
+# stronger footing than any table I could propose. The CEFR target per
+# Standardstufe is the published one.
+efl:
+  basis: bildungsplan-standardstufe
+  note: >-
+    Derived from the Standardstufe in each page's own bildungsplan block.
+    Klassenstufe is used only as a fallback where a page carries no code.
+  standardstufe:
+    "1": A1      # Ende Klasse 6 — BW target A1+, catalogued as A1
+    "2": A2      # Ende Klasse 8/9
+    "3": B1      # Ende Klasse 10, mittlerer Bildungsabschluss
+    "4": B2      # Kursstufe, grundlegendes Niveau
+    "5": B2      # Kursstufe, erhöhtes Niveau — B2 with C1 reachable in
+                 # extension tasks; the catalogue level stays B2 so a unit does
+                 # not claim C1 descriptors it only touches.
+  klassenstufe:  # fallback only
+    5: A1
+    6: A1
+    7: A2
+    8: A2
+    9: A2
+    10: B1
+    11: B2
+    12: B2
+    13: B2
+
+# ── fle: PROPOSED, and the difference matters ────────────────────────────────
+#
+# French as 2. Fremdsprache from Klasse 6. Its level CANNOT be derived the way
+# efl's is, because its Bildungsplan block carries no level information:
+# measured across all 312 pages, every Klassenstufe from 6 to 13 cites
+# Standardstufe 3.1 and nothing else — including Kursstufe units at Klasse 13,
+# where the BW Französisch plan has 3.3/3.4. That is a scaffolding artefact,
+# not an alignment, and it is recorded as a defect rather than worked around
+# silently.
+#
+# So this table is the standard progression for a second foreign language
+# beginning in Klasse 6, and it is a PROPOSAL for the author to confirm. Every
+# page written from it is marked `level_basis: proposed` so the distinction
+# survives into the front matter and can be queried later.
+fle:
+  basis: klassenstufe
+  note: >-
+    Proposed. This course's bildungsplan codes are uniformly 3.1.x at every
+    Klassenstufe and carry no level signal, so nothing in the repository
+    constrains this table. Confirm or correct it, then re-run.
+  klassenstufe:
+    6: A1        # Anfangsunterricht
+    7: A1
+    8: A2        # Ende Klasse 8, KMK: A2 für die 2. FS
+    9: A2
+    10: B1       # Ende Klasse 10, mittlerer Bildungsabschluss
+    11: B1       # Einführungsphase
+    12: B2
+    13: B2       # Abitur, 2. FS: B2
+
+# ── daf ──────────────────────────────────────────────────────────────────────
+# Not in this table. daf already carried cefr_level on all 60 pages and was
+# migrated from it directly — its levels are the author's, stated per page,
+# and no mapping was ever needed.
