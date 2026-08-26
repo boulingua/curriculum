@@ -11,7 +11,11 @@
 # So: ONE framework, `boulingua-curriculum`, plus zero or more secondary
 # anchors (ADR-0012). The enum values `cefr` and `bildungsplan-bw` are removed.
 
-version: 1.1.0
+# ONE version for this repository, and it lives in ./VERSION. This file used to
+# carry its own `version: 1.1.0` beside a VERSION file and a git tag — three
+# numbers for one thing, and a manifest pinning the release its course actually
+# consumed was rejected by a resolver reading a different one.
+version_source: ../VERSION
 
 curriculum:
   framework:
