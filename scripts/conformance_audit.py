@@ -2,6 +2,7 @@
 """The one conformance resolver. Framework-side and consumer-side, one tool.
 
     conformance_audit.py self-audit
+    conformance_audit.py COURSE_REPO                 <- the battery's shape
     conformance_audit.py resolve --manifest conformance.yml --content content/
     conformance_audit.py coverage [--emit-yaml] [--check]
     conformance_audit.py explain A1.REC.overall-oral-comprehension.01
@@ -447,6 +448,26 @@ def cmd_suggest(a) -> int:
 
 
 def main() -> int:
+    # A BARE REPO PATH resolves that course. `kit check` hands every gate the
+    # repo and nothing else, so a tool whose only entry points were subcommands
+    # could not be in the battery — which is why gate A16 sat battery:false with
+    # a `runs:` field naming a workflow that never invoked it. It was status:
+    # live and had no invocation site anywhere in the organisation.
+    argv = sys.argv[1:]
+    if argv and not argv[0].startswith("-") and argv[0] not in (
+            "self-audit", "resolve", "coverage", "explain", "suggest"):
+        repo = Path(argv[0]).resolve()
+        if not repo.is_dir():
+            print(f"::error::{repo} is not a directory", file=sys.stderr)
+            return 2
+        manifest = repo / "curriculum.yml"
+        if not manifest.exists():
+            print(f"A16 n/a — {repo.name} declares no curriculum.yml, so it "
+                  f"claims no conformance to resolve.")
+            return 0
+        sys.argv = [sys.argv[0], "resolve", "--manifest", str(manifest),
+                    "--content", str(repo / "content")]
+
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("self-audit")
