@@ -1,0 +1,38 @@
+# Implements organisation ADR-0013. Reception, written interaction, strategies,
+# mediation and language awareness remain in scope; see docs/conformance.md.
+profile: classical-reception
+language: la
+adr: https://github.com/boulingua/.github/blob/main/docs/adr/0013-core-restricted-and-the-classical-reception-profile.md
+out_of_scope:
+- domain: PROD
+  scale: addressing-audiences
+- domain: PROD
+  scale: overall-oral-production
+- domain: PROD
+  scale: public-announcements
+- domain: PROD
+  scale: sustained-monologue-describing-experience
+- domain: PROD
+  scale: sustained-monologue-giving-information
+- domain: PROD
+  scale: sustained-monologue-putting-a-case
+- domain: INT
+  scale: conversation
+- domain: INT
+  scale: formal-discussion
+- domain: INT
+  scale: goal-oriented-co-operation
+- domain: INT
+  scale: informal-discussion
+- domain: INT
+  scale: information-exchange
+- domain: INT
+  scale: interviewing-and-being-interviewed
+- domain: INT
+  scale: obtaining-goods-and-services
+- domain: INT
+  scale: overall-oral-interaction
+- domain: INT
+  scale: understanding-an-interlocutor
+- domain: INT
+  scale: using-telecommunications

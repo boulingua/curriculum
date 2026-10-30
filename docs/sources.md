@@ -69,3 +69,12 @@ German version); EN/FR are 2020.
   lingua italiana*, *Nederlands Profiel*, *English Profile*. Language-specific;
   belong under `boulingua/languages/*` and are catalogued in the `ressources`
   registry, not in this shared framework. Pending.
+
+## Coverage recheck, 30 October 2026
+
+The official English PDF was accessible during this audit. Pages 65–66 and
+88–89 confirm that the two repository-wide empty scales are omissions here,
+not empty official scales. `schema/known-empty-scales.yml` records the affected
+levels and citations. Framework self-audit blocks release, and course resolution
+refuses `met` while an applicable omission remains. In-progress manifests can
+still be checked for structural integrity. Existing descriptor IDs are unchanged.

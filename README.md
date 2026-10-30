@@ -1,11 +1,12 @@
 # curriculum — the boulingua CEFR descriptor framework
 
-1,170 can-do statements across 7 levels and 79 in-scope scales, each carrying a
+1,170 can-do statements across 7 levels and 77 populated scales out of 79
+in-scope scales, each carrying a
 stable id, a citation to the CEFR Companion Volume (2020), and an `implements`
 block naming the domain, scale, level and descriptor ordinal it realizes.
 
 A course does not copy from here. It **maps to** here: its own can-dos are its
-own, and `conformance.yml` records which framework statement each one realizes.
+own, and `curriculum.yml` records which framework statement each one realizes.
 That is what makes a conformance claim checkable and what keeps Council of
 Europe text out of the courses.
 
@@ -35,14 +36,14 @@ it absent, because conformance is a gate and not a build input.
 
 ```bash
 python .curriculum/scripts/conformance_audit.py \
-    resolve --manifest conformance.yml --content content/
+    resolve --manifest curriculum.yml --content content/
 ```
 
 ### Exit codes are the contract
 
 | | |
 |---|---|
-| 0 | conformant |
+| 0 | valid for the declared status; in-progress is not conformance approval |
 | 1 | usage |
 | 2 | manifest fails schema |
 | 3 | a **wrong** id — malformed, dangling, deprecated, duplicated, out of span |
@@ -69,22 +70,21 @@ three integers a gate will eventually contradict.
 
 > A **cell** is a `(level, scale)` pair where the scale is `in_scope`. It is
 > **populated** if at least one `status: active` statement carries that level
-> and that scale, and **excused** if listed in `schema/known-empty-scales.yml`.
+> and that scale, and **excused** only when the official source genuinely has no applicable descriptor.
+> Entries marked `missing-in-repository` are blockers, never exemptions.
 > A course conforming at level *L* covers ≥ 90 % of the populated, non-excused
 > cells at every level up to and including *L*.
 
-`core` (A1–B1) = 206 cells · `full` (A1–C1) = 356 · all seven = 441.
+Current counts are generated in [`coverage.yml`](coverage.yml); see [conformance rules](docs/conformance.md) for target spans and the restricted profile.
 
 ## Open
 
-Two in-scope scales carry zero statements at every level:
-`PROD.addressing-audiences` and `INT.co-operating`. Their siblings are
-populated throughout, so an authoring omission is the likelier explanation than
-a genuinely empty CV cell — and the distinction matters, because the
-descriptor-existence matrix is what *excuses* a course from covering a cell.
-Both are recorded in `schema/known-empty-scales.yml` as `pending`, and
-`self-audit` warns on every run until someone checks the CV. See that file for
-the procedure.
+The dated official-source check confirms that `PROD.addressing-audiences` and
+`INT.co-operating` contain descriptors missing from this repository.
+`schema/known-empty-scales.yml` records their source levels and required repair.
+`self-audit` fails for these omissions; an applicable `met` conformance claim
+also fails. A qualified reviewer must add and verify the missing statements
+before a conformance release. See [REFINEMENT.md](REFINEMENT.md).
 
 ## Licence
 

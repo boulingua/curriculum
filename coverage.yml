@@ -12,10 +12,9 @@ levels:
   C2: 56
 spans:
   core: 206
-  core-restricted: 206
+  core-restricted: 165
   full: 356
-  complete: 441
-  partial: 441
+  complete: 412
 statements:
   total: 1170
   preA1: 42

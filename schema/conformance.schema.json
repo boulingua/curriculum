@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Boulingua course conformance manifest",
+  "type": "object",
+  "required": [
+    "framework",
+    "framework_version",
+    "language",
+    "declared_conformance"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "framework": {
+      "const": "boulingua-curriculum"
+    },
+    "framework_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "language": {
+      "type": "string",
+      "minLength": 1
+    },
+    "declared_conformance": {
+      "enum": [
+        "core",
+        "full",
+        "complete",
+        "core-restricted"
+      ]
+    },
+    "conformance_status": {
+      "enum": [
+        "in-progress",
+        "met"
+      ]
+    },
+    "profile": {
+      "const": "classical-reception"
+    },
+    "levels_claimed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "preA1",
+          "A1",
+          "A2",
+          "B1",
+          "B2",
+          "C1",
+          "C2"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "realizations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "implements_id"
+        ],
+        "properties": {
+          "implements_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "page": {
+            "type": "string",
+            "minLength": 1
+          },
+          "de": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "level",
+          "domain",
+          "scale",
+          "reason",
+          "scheduled"
+        ],
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "preA1",
+              "A1",
+              "A2",
+              "B1",
+              "B2",
+              "C1",
+              "C2"
+            ]
+          },
+          "domain": {
+            "type": "string",
+            "enum": [
+              "REC",
+              "PROD",
+              "INT",
+              "MED",
+              "PLUR",
+              "LING",
+              "SOC",
+              "PRAG"
+            ]
+          },
+          "scale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scheduled": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "out_of_scope": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "domain",
+          "scale"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "enum": [
+              "REC",
+              "PROD",
+              "INT",
+              "MED",
+              "PLUR",
+              "LING",
+              "SOC",
+              "PRAG"
+            ]
+          },
+          "scale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "uniqueItems": true
+    },
+    "pages": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "enum": [
+          "preA1",
+          "A1",
+          "A2",
+          "B1",
+          "B2",
+          "C1",
+          "C2"
+        ]
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "implements": {
+      "type": "object",
+      "required": [
+        "distinct_descriptors",
+        "proposed",
+        "asserted"
+      ],
+      "properties": {
+        "distinct_descriptors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "proposed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "asserted": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "preA1",
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ]
+    },
+    "note": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

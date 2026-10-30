@@ -1,48 +1,30 @@
-# In-scope scales carrying no statements, and why.
-#
-# This file exists because of what an empty cell MEANS. The descriptor-existence
-# matrix is what excuses a course from covering a (level, scale) cell — if the
-# framework has no descriptor, no course can be expected to realize one. So an
-# in-scope scale with zero statements silently excuses all eighteen courses from
-# ever teaching that thing, and it does so whether the emptiness is real or an
-# authoring omission.
-#
-# Two states, and the difference is the whole point:
-#
-#   status: empty-in-cv    The Companion Volume genuinely has no descriptor
-#                          here. Requires a `cite` naming the CV section
-#                          checked. Excused, and correctly so.
-#
-#   status: pending        Nobody has checked yet. NOT excused on the evidence
-#                          — excused only because there is nothing to cover.
-#                          self-audit warns on every run until it is resolved.
-#
-# A `pending` row is a debt, not a decision, and it is recorded here rather than
-# left as an absence precisely so it cannot pass for one.
-
+# Empty repository scales: a source omission is never a curricular exemption.
 scales:
   - domain: PROD
     scale: addressing-audiences
-    status: pending
+    status: missing-in-repository
+    source_levels: [A1, A2, B1, B2, C1, C2]
+    checked: 2026-10-30
+    cite: "Council of Europe, CEFR Companion Volume (2020), pp. 65–66"
+    source: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
     found: >-
-      Zero statements at all seven levels. This is one of exactly two in-scope
-      scales in that state out of 79, which is itself the reason to doubt it:
-      its sibling production scales are populated throughout, and a whole
-      CV scale being empty at every level is unusual.
+      The official scale contains descriptors. This repository has no statements
+      for it. Pre-A1 has no descriptor; that does not excuse A1 through C2.
     resolve: >-
-      Check CEFR CV (2020), Production › Addressing Audiences. If descriptors
-      exist, mint them additively — ids never renumber — and delete this row.
-      If the CV genuinely has none, change status to empty-in-cv and add the
-      page citation.
+      Add faithful, independently reviewed statements with stable additive IDs,
+      exact source ordinals and level distinctions. Recompute the crosswalk and
+      coverage together; retain this record until the omission is resolved.
   - domain: INT
     scale: co-operating
-    status: pending
+    status: missing-in-repository
+    source_levels: [A2, B1, B2, C1, C2]
+    checked: 2026-10-30
+    cite: "Council of Europe, CEFR Companion Volume (2020), pp. 88–89"
+    source: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
     found: >-
-      Zero statements at all seven levels, while the sibling interaction
-      strategies INT.turntaking (A2-C1) and INT.asking-for-clarification
-      (A1-C1) are populated. An omission is the more likely explanation.
+      The official scale contains descriptors, including a B2+ band. This
+      repository has no statements for it. Pre-A1 and A1 have no descriptor.
     resolve: >-
-      Check CEFR CV (2020), Interaction › Co-operating. Same procedure as
-      above. Until then no course can realize this scale, so every course is
-      excused from it by default — which is exactly the outcome this file
-      exists to make visible.
+      Add faithful, independently reviewed statements with stable additive IDs.
+      Preserve the distinction between B2 and B2+ in source provenance, then
+      recompute the crosswalk and coverage before removing this record.

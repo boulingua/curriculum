@@ -1,2 +1,5 @@
 # Retrieved primary sources — copyrighted, never commit (see docs/sources.md)
 .sources/
+__pycache__/
+*.pyc
+.venv/

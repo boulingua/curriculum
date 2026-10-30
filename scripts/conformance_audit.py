@@ -34,6 +34,10 @@ gate ended up either blocking everything or checking nothing.
 from __future__ import annotations
 
 import argparse
+import math
+import json
+from datetime import date
+from jsonschema import Draft202012Validator, FormatChecker
 import re
 import sys
 from collections import defaultdict
@@ -124,7 +128,12 @@ def cmd_self_audit(a) -> int:
     excused = load_excused()
     bad = 0
     seen: set[str] = set()
+    schema = json.loads((ROOT / 'schema/can-do.schema.json').read_text())
+    validator = Draft202012Validator(schema)
     for st in sts:
+        for error in validator.iter_errors(st):
+            print(f"::error::{st.get('id', '?')}: {error.message}")
+            bad += 1
         sid = st["id"]
         m = ID_RE.match(sid)
         if not m:
@@ -136,6 +145,13 @@ def cmd_self_audit(a) -> int:
             bad += 1
         seen.add(sid)
         lv, dom, scale, _ = m.groups()
+        imp = st.get('implements', {})
+        if (lv, dom, scale) != (imp.get('level'), imp.get('domain'), imp.get('scale')):
+            print(f"::error::{sid}: id disagrees with implements")
+            bad += 1
+        if st.get('status') == 'deprecated' and st.get('superseded_by') not in {x['id'] for x in sts}:
+            print(f"::error::{sid}: superseded_by does not resolve")
+            bad += 1
         if (dom, scale) not in reg:
             print(f"::error::{sid} names no scale in scale-registry.yml")
             bad += 1
@@ -158,14 +174,18 @@ def cmd_self_audit(a) -> int:
               f"empty scale silently excuses all eighteen courses from ever "
               f"teaching it.")
     bad += len(unrecorded)
-    pending = [k for k in empty if excused.get(k, {}).get("status") == "pending"]
-    for d, s in pending:
-        print(f"::warning::{d}.{s} is empty and nobody has checked whether the "
-              f"CV has descriptors for it. Recorded as pending, not decided.")
-    cited = len(excused) - len(pending)
+    unresolved = [k for k in empty if excused.get(k, {}).get("status") != "empty-in-cv"]
+    for d, scale in unresolved:
+        row = excused.get((d, scale), {})
+        print(f"::error::{d}.{scale}: unresolved framework coverage ({row.get('status', 'unrecorded')}); {row.get('cite', 'source review required')}")
+    bad += len([k for k in unresolved if k not in unrecorded])
+    cited = [k for k in empty if excused.get(k, {}).get('status') == 'empty-in-cv']
+    for key in cited:
+        if not excused[key].get('cite'):
+            print(f"::error::{key}: an empty-in-cv exemption requires a source citation")
+            bad += 1
     if excused:
-        print(f"  {len(excused)} empty in-scope scale(s): {cited} verified "
-              f"empty in the CV, {len(pending)} pending a determination")
+        print(f"  {len(cited)} source-verified empty scales; {len(unresolved)} unresolved omissions")
     if bad:
         print(f"\nself-audit FAIL — {bad} problem(s)", file=sys.stderr)
         return 3
@@ -176,126 +196,145 @@ def cmd_self_audit(a) -> int:
 # ── resolve: the consumer gate ──────────────────────────────────────────────
 def cmd_resolve(a) -> int:
     man_path = Path(a.manifest)
-    if not man_path.exists():
-        print(f"::error::no manifest at {man_path}", file=sys.stderr)
-        return 1
-    man = yaml.safe_load(man_path.read_text(encoding="utf-8")) or {}
-
-    for field in ("framework", "framework_version", "language", "declared_conformance"):
-        if field not in man:
-            print(f"::error::manifest is missing required field {field!r}", file=sys.stderr)
-            return 2
-    if man["framework"] != "boulingua-curriculum":
-        print(f"::error::framework is {man['framework']!r}, expected "
-              f"'boulingua-curriculum'", file=sys.stderr)
+    try:
+        man = yaml.safe_load(man_path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        print(f"::error::{exc}", file=sys.stderr)
         return 2
-    declared = man["declared_conformance"]
-    if declared not in SPANS:
-        print(f"::error::declared_conformance {declared!r} is not one of "
-              f"{sorted(SPANS)}", file=sys.stderr)
+    if not isinstance(man, dict):
+        print("::error::manifest must be a mapping")
         return 2
-
-    version = (ROOT / "VERSION").read_text(encoding="utf-8").strip() \
-        if (ROOT / "VERSION").exists() else "0"
-    if str(man["framework_version"]).split("+")[0] != version:
-        print(f"::error::manifest pins framework {man['framework_version']}, "
-              f"this checkout is {version}", file=sys.stderr)
+    schema = json.loads((ROOT / 'schema/conformance.schema.json').read_text())
+    errors = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(man))
+    if errors:
+        for error in errors:
+            print(f"::error::manifest {list(error.path)}: {error.message}")
+        return 2
+    declared = man['declared_conformance']
+    status = man.get('conformance_status', 'in-progress')
+    version = (ROOT / 'VERSION').read_text().strip()
+    if man['framework_version'].split('+')[0] != version:
+        print(f"::error::manifest pins {man['framework_version']}; framework is {version}")
         return 6
-
-    reg = load_registry()
-    valid = {st["id"] for st in load_statements() if st.get("status") == "active"}
-    deprecated = {st["id"] for st in load_statements() if st.get("status") != "active"}
-    span = SPANS[declared]
-
-    claimed: set[str] = set()
-    bad = 0
-    for r in man.get("realizations", []) or []:
-        rid = r.get("implements_id")
-        if not rid:
-            print(f"::error::realization with no implements_id: {r}")
-            bad += 1
+    excluded = set()
+    if declared == 'core-restricted':
+        if man.get('profile') != 'classical-reception' or man['language'] != 'la':
+            print('::error::core-restricted requires the approved Latin classical-reception profile')
+            return 2
+        profile = yaml.safe_load((ROOT / 'profiles/classical-reception.yml').read_text())
+        excluded = {(x['domain'], x['scale']) for x in profile['out_of_scope']}
+    elif man.get('profile') or man.get('out_of_scope'):
+        print('::error::profile exclusions require core-restricted and an approved profile')
+        return 2
+    if any((x['domain'], x['scale']) not in excluded for x in man.get('out_of_scope', [])):
+        print('::error::out_of_scope includes a scale outside the approved profile')
+        return 2
+    span = list(SPANS[declared])
+    if PREA1 in man.get('levels_claimed', []):
+        span.insert(0, PREA1)
+    if any(lv not in span for lv in man.get('levels_claimed', [])):
+        print('::error::levels_claimed contains a level outside the target span')
+        return 2
+    if status == 'met':
+        unresolved = [(key, row) for key, row in load_empty_scales().items()
+                      if row.get('status') != 'empty-in-cv' and key not in excluded
+                      and set(row.get('source_levels', span)) & set(span)]
+        if unresolved:
+            for (domain, scale), row in unresolved:
+                print(f'::error::{domain}.{scale}: unresolved framework omission prevents a met claim')
+            return 5
+    valid = {st['id'] for st in load_statements() if st.get('status') == 'active'}
+    claimed, pairs, bad = set(), set(), []
+    for row in man.get('realizations', []):
+        rid, page = row['implements_id'], row.get('page', '')
+        match = ID_RE.fullmatch(rid)
+        if not match or rid not in valid or match.group(1) not in span:
+            bad.append(f'{rid}: malformed, inactive, unresolved or outside the target span')
             continue
-        m = ID_RE.match(rid)
-        if not m:
-            print(f"::error::malformed id {rid}")
-            bad += 1
-            continue
-        if rid in deprecated:
-            print(f"::error::{rid} is deprecated in the framework")
-            bad += 1
-            continue
-        if rid not in valid:
-            print(f"::error::{rid} does not resolve to an active statement")
-            bad += 1
-            continue
-        lv = m.group(1)
-        if lv not in span:
-            print(f"::error::{rid} is at level {lv}, outside the declared "
-                  f"span for {declared} ({'/'.join(span)})")
-            bad += 1
-            continue
+        if (match.group(2), match.group(3)) in excluded:
+            bad.append(f'{rid}: profile excludes this scale')
+        if (page, rid) in pairs:
+            bad.append(f'{page}: duplicate realization {rid}')
+        if page and (Path(page).is_absolute() or '..' in Path(page).parts or '\\' in page):
+            bad.append(f'{page}: page must be a relative content path')
+        pairs.add((page, rid))
         claimed.add(rid)
     if bad:
-        print(f"\nresolve FAIL — {bad} wrong id(s). A wrong id is exit 3 and "
-              f"blocks; incomplete coverage is exit 5 and can be warned during "
-              f"a ramp. They are not the same failure.", file=sys.stderr)
+        for error in bad: print(f'::error::{error}')
         return 3
-
-    # ── front matter <-> manifest drift ───────────────────────────────────
+    # Match (page, descriptor) pairs in BOTH directions. IDs in prose do not count.
     content = Path(a.content) if a.content else None
-    if content and content.exists():
-        in_content: set[str] = set()
-        for md in content.rglob("*.md"):
-            for hit in ID_RE.findall(""):    # placeholder, real scan below
-                pass
-            txt = md.read_text(encoding="utf-8", errors="replace")
-            in_content |= set(re.findall(
-                rf"\b(?:{'|'.join(LEVELS)})\.(?:{'|'.join(DOMAINS)})\.[a-z0-9-]+\.\d{{2}}\b", txt))
-        drift = in_content - claimed
-        if drift:
-            for d in sorted(drift)[:10]:
-                print(f"::error::{d} appears in content but not in the manifest")
-            print(f"\nresolve FAIL — {len(drift)} id(s) drift between content "
-                  f"and manifest", file=sys.stderr)
+    proposed = []
+    if content is not None:
+        if not content.is_dir():
+            print(f'::error::content directory is missing: {content}')
             return 4
-
-    # ── coverage against the declared level ───────────────────────────────
-    # in-progress: every id must still be correct (exit 3 applies in full), but
-    # coverage is not yet asserted, so a shortfall is reported and not failed.
-    # This is what makes the per-level backfill tranches possible — a tranche
-    # that is not done must not block one that is.
-    status = man.get("conformance_status", "in-progress")
-    if status not in STATUSES:
-        print(f"::error::conformance_status {status!r} is not one of "
-              f"{sorted(STATUSES)}", file=sys.stderr)
-        return 2
-    if status == "in-progress":
-        print(f"  {len(claimed)} realizations resolve, targeting {declared}, "
-              f"framework {version}")
-        print("resolve OK — in-progress: ids verified, coverage not yet claimed")
+        actual, page_stats, basis_stats = set(), defaultdict(int), defaultdict(int)
+        for md in sorted(content.rglob('*.md')):
+            text = md.read_text(encoding='utf-8')
+            front = re.match(r'\A---\s*\n(.*?)\n---(?:\n|$)', text, re.S)
+            try:
+                fm = yaml.safe_load(front.group(1)) if front else {}
+                block = (fm or {}).get('curriculum') or {}
+                ids = block.get('implements') or []
+                if not isinstance(ids, list) or any(not isinstance(x, str) for x in ids):
+                    raise ValueError('curriculum.implements must be a list of descriptor ids')
+            except (yaml.YAMLError, AttributeError, ValueError) as exc:
+                print(f'::error::{md}: {exc}')
+                return 2
+            key = md.relative_to(content).with_suffix('').as_posix()
+            if key.endswith('/index'): key = key[:-6]
+            if len(ids) != len(set(ids)) or any(x not in valid for x in ids):
+                print(f'::error::{md}: duplicate or unresolved descriptor id')
+                return 3
+            actual.update((key, rid) for rid in ids)
+            if ids:
+                page_stats[block.get('level')] += 1
+                basis_stats[block.get('implements_basis', 'unreviewed')] += 1
+                if block.get('implements_basis') != 'asserted': proposed.append(key)
+                if any(ID_RE.fullmatch(x).group(1) != block.get('level') for x in ids):
+                    print(f'::error::{md}: descriptor level differs from curriculum.level')
+                    return 3
+        drift = pairs ^ actual
+        if drift:
+            for page, rid in sorted(drift)[:15]:
+                where = 'manifest only' if (page, rid) in pairs else 'content only'
+                print(f'::error::{page}: {rid} ({where})')
+            print(f'::error::{len(drift)} page/descriptor pairs disagree')
+            return 4
+        if 'pages' in man and man['pages'] != dict(page_stats):
+            print('::error::manifest pages summary disagrees with source')
+            return 4
+        if 'implements' in man:
+            measured = {'distinct_descriptors':len(claimed), 'proposed':basis_stats['proposed'], 'asserted':basis_stats['asserted']}
+            if man['implements'] != measured:
+                print(f'::error::manifest implements summary disagrees with source: {measured}')
+                return 4
+    if status == 'in-progress':
+        print(f'resolve OK — {len(pairs)} realizations, {len(claimed)} distinct descriptors; target {declared}; coverage not claimed')
         return 0
-
-    pop, _ = cells()
-    excused = load_excused()
-    missing_total = 0
-    for lv in span:
-        want = {k for k in pop.get(lv, set()) if k not in excused}
-        got = {(ID_RE.match(c).group(2), ID_RE.match(c).group(3))
-               for c in claimed if c.startswith(lv + ".")}
-        covered = len(want & got)
-        need = int(len(want) * COVERAGE_THRESHOLD)
-        if covered < need:
-            print(f"::warning::{lv}: {covered}/{len(want)} in-scope scales covered, "
-                  f"{need} needed for {declared}")
-            missing_total += need - covered
-    print(f"  {len(claimed)} realizations resolve, span {declared} "
-          f"({'/'.join(span)}), framework {version}")
-    if missing_total:
-        print(f"\nresolve: declared level not met — {missing_total} scale(s) short. "
-              f"This is exit 5, not exit 3: nothing here is WRONG, it is "
-              f"incomplete, and a ramping course may warn on it.", file=sys.stderr)
+    if content is None or proposed:
+        print(f'::error::met requires source pages and asserted mappings; {len(proposed)} pages remain unreviewed')
         return 5
-    print("resolve OK — conformant at the declared level")
+    pop, _ = cells()
+    missing, short = set(), 0
+    for lv in span:
+        want = pop.get(lv, set()) - excluded
+        got = {(ID_RE.fullmatch(c).group(2), ID_RE.fullmatch(c).group(3)) for c in claimed if c.startswith(lv + '.')}
+        absent = want - got
+        missing.update((lv, dom, scale) for dom, scale in absent)
+        need = math.ceil(len(want) * COVERAGE_THRESHOLD)
+        # ADR-0013 keeps these domains complete within the restricted profile.
+        strict = {'REC', 'MED', 'PLUR', 'LING', 'SOC', 'PRAG'} if excluded else set()
+        if len(want & got) < need or any(dom in strict for dom, _ in absent):
+            print(f'::error::{lv}: {len(want & got)}/{len(want)} cells; minimum {need}')
+            short += 1
+    gaps = {(x['level'], x['domain'], x['scale']) for x in man.get('gaps', [])}
+    if gaps != missing or len(gaps) != len(man.get('gaps', [])):
+        print('::error::gaps must record each uncovered cell exactly once, with reason and scheduled date')
+        return 5
+    if short: return 5
+    print('resolve OK — declared coverage verified against asserted source mappings')
     return 0
 
 
@@ -322,14 +361,18 @@ def cmd_coverage(a) -> int:
         doc["statements"][lv] = sum(
             1 for x in sts if x.get("implements", {}).get("level") == lv)
     for name, span in SPANS.items():
-        doc["spans"][name] = sum(doc["levels"][lv] for lv in span)
+        profile_excluded = set()
+        if name == 'core-restricted':
+            profile = yaml.safe_load((ROOT/'profiles/classical-reception.yml').read_text())
+            profile_excluded = {(x['domain'],x['scale']) for x in profile['out_of_scope']}
+        doc["spans"][name] = sum(len(pop.get(lv,set()) - set(excused) - profile_excluded) for lv in span)
     out = ROOT / "coverage.yml"
     text = yaml.dump(doc, sort_keys=False, allow_unicode=True)
     if a.check:
         if not out.exists():
             print("::error::coverage.yml missing — run coverage --emit-yaml", file=sys.stderr)
             return 4
-        if out.read_text(encoding="utf-8") != text:
+        if yaml.safe_load(out.read_text(encoding="utf-8")) != doc:
             print("::error::coverage.yml disagrees with a recomputation. Three "
                   "integers in prose are three integers a gate will eventually "
                   "contradict; regenerate rather than editing.", file=sys.stderr)
