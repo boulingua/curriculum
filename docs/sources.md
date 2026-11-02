@@ -78,3 +78,15 @@ not empty official scales. `schema/known-empty-scales.yml` records the affected
 levels and citations. Framework self-audit blocks release, and course resolution
 refuses `met` while an applicable omission remains. In-progress manifests can
 still be checked for structural integrity. Existing descriptor IDs are unchanged.
+
+## Source restoration, 31 October 2026
+
+The authoritative English PDF was read directly at the Council of Europe URL
+above, tables on printed pages 65–66 and 88–89. It supplies 18 rows for Addressing
+audiences and 11 for Co-operating. The latter explicitly distinguishes its B2+
+rows from B2; that distinction is retained as source metadata. Twenty-nine
+additive operational statements restore these rows without replacing existing
+IDs. The old omission record and pending independent review are retained in
+`schema/source-restoration-2026-10-31.yml`. A structural self-audit may pass after
+restoration; a `met` course claim remains blocked until independent source review
+is actually recorded. No human approval is implied by the restoration.

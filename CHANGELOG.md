@@ -9,6 +9,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/); versioning is
 > empty (only `LICENSE`); there is no prior version to supersede. This is a
 > greenfield initial release, so it is **`v1.0.0`**, not `v2.0.0`.
 
+## [Unreleased] — 2026-10-31
+
+- Restore 29 missing source rows in Addressing audiences and Co-operating with
+  additive IDs, explicit page/band/ordinal metadata and refreshed coverage.
+- Preserve a pending independent source-review gate for achieved course claims.
+- Check crosswalk completeness and keep omissions out of denominator exemptions.
+- Add canonical EQS-1 standards, authoring/review assets and source-hashed course
+  mapping ledgers. Existing course mappings remain proposed.
+
 ## [1.0.0] — 2026-07-22
 
 Greenfield initial release: a CEFR Pre-A1–C2 descriptor framework grounded in the

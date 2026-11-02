@@ -1174,3 +1174,39 @@ Boulingua ID ↔ official CEFR CV (2020) descriptor. `gist` is a short attribute
 | `B2.PRAG.fluency.03` | cefr-cv-2020 | Fluency | B2 | 3 | Interacts fluently enough for regular exchanges without straining eith |
 | `C1.PRAG.fluency.01` | cefr-cv-2020 | Fluency | C1 | 1 | Expresses self fluently, spontaneously; only difficult topics slow flo |
 | `C2.PRAG.fluency.01` | cefr-cv-2020 | Fluency | C2 | 1 | Speaks at length with natural, effortless flow; pauses only to refine |
+
+## Restored source rows (31 October 2026)
+
+Independent source review is pending; the explicit printed source label and row preserve B2+ provenance. The existing 1,170 IDs and crosswalk rows are unchanged.
+
+| Boulingua ID | Source | Printed page | Printed level | Row | Operational statement |
+|---|---|---:|---|---:|---|
+| `A1.PROD.addressing-audiences.01` | cefr-cv-2020 | 66 | A1 | 1 | I can deliver a tiny rehearsed address using a prepared text, such as an introduction or toast. |
+| `A2.PROD.addressing-audiences.01` | cefr-cv-2020 | 66 | A2 | 1 | I can present a rehearsed everyday topic briefly, giving short reasons and explanations for my opinions, intentions or actions. |
+| `A2.PROD.addressing-audiences.02` | cefr-cv-2020 | 66 | A2 | 2 | I can answer a few uncomplicated questions after my presentation. |
+| `A2.PROD.addressing-audiences.03` | cefr-cv-2020 | 66 | A2 | 3 | I can give a basic, short talk on a familiar subject after practising it. |
+| `A2.PROD.addressing-audiences.04` | cefr-cv-2020 | 66 | A2 | 4 | I can respond to simple questions after my talk when repetition and help wording my answer are available. |
+| `B1.PROD.addressing-audiences.01` | cefr-cv-2020 | 66 | B1 | 1 | I can prepare a talk about a familiar subject in my field and explain how examples or options resemble or differ from one another. |
+| `B1.PROD.addressing-audiences.02` | cefr-cv-2020 | 66 | B1 | 2 | I can deliver a straightforward prepared talk about a familiar subject in my field, making its main points reasonably precise and usually easy to follow. |
+| `B1.PROD.addressing-audiences.03` | cefr-cv-2020 | 66 | B1 | 3 | I can respond to questions after my talk, asking for a question again when it is delivered too quickly. |
+| `B2.PROD.addressing-audiences.01` | cefr-cv-2020 | 65 | B2 | 1 | I can organise a clear presentation systematically, emphasising important points and supporting them with relevant detail. |
+| `B2.PROD.addressing-audiences.02` | cefr-cv-2020 | 65 | B2 | 2 | I can leave my prepared script to explore points raised by the audience spontaneously, often communicating with considerable ease. |
+| `B2.PROD.addressing-audiences.03` | cefr-cv-2020 | 65 | B2 | 3 | I can present a prepared argument clearly, supporting or opposing a position and comparing the benefits and drawbacks of options. |
+| `B2.PROD.addressing-audiences.04` | cefr-cv-2020 | 65 | B2 | 4 | I can answer successive audience questions spontaneously and fluently enough for both sides to remain comfortable. |
+| `C1.PROD.addressing-audiences.01` | cefr-cv-2020 | 65 | C1 | 1 | I can present a complex subject clearly with a coherent structure, developing my viewpoints through substantial reasoning, examples and supporting points. |
+| `C1.PROD.addressing-audiences.02` | cefr-cv-2020 | 65 | C1 | 2 | I can organise an extended presentation so that listeners can track the progression and understand my overall case. |
+| `C1.PROD.addressing-audiences.03` | cefr-cv-2020 | 65 | C1 | 3 | I can explore hypotheses about a complex subject while comparing and appraising alternative arguments and proposals. |
+| `C1.PROD.addressing-audiences.04` | cefr-cv-2020 | 65 | C1 | 4 | I can deal with audience interruptions spontaneously and with very little apparent effort. |
+| `C2.PROD.addressing-audiences.01` | cefr-cv-2020 | 65 | C2 | 1 | I can explain a complex topic clearly, articulately and confidently to newcomers, adjusting my structure and delivery flexibly to what that audience needs. |
+| `C2.PROD.addressing-audiences.02` | cefr-cv-2020 | 65 | C2 | 2 | I can respond effectively when audience questions are challenging or antagonistic. |
+| `A2.INT.co-operating.01` | cefr-cv-2020 | 89 | A2 | 1 | I can signal that I understand the ongoing exchange. |
+| `B1.INT.co-operating.01` | cefr-cv-2020 | 89 | B1 | 1 | I can use a modest set of expressions and strategies to sustain an exchange. |
+| `B1.INT.co-operating.02` | cefr-cv-2020 | 89 | B1 | 2 | I can recap a discussion so far to bring its argument back into focus. |
+| `B1.INT.co-operating.03` | cefr-cv-2020 | 89 | B1 | 3 | I can echo part of a contribution to check shared understanding and keep ideas developing in the intended direction. |
+| `B1.INT.co-operating.04` | cefr-cv-2020 | 89 | B1 | 4 | I can encourage another person to join the discussion. |
+| `B2.INT.co-operating.01` | cefr-cv-2020 | 88 | B2+ | 1 | I can respond to others' statements and inferences, building on them to advance the discussion. |
+| `B2.INT.co-operating.02` | cefr-cv-2020 | 88 | B2+ | 2 | I can recap and appraise the important points in a discussion within my professional or academic field. |
+| `B2.INT.co-operating.03` | cefr-cv-2020 | 89 | B2 | 1 | I can advance discussion of a familiar subject by checking understanding and drawing other people in. |
+| `B2.INT.co-operating.04` | cefr-cv-2020 | 89 | B2 | 2 | I can recap the present stage of a discussion and suggest how to proceed. |
+| `C1.INT.co-operating.01` | cefr-cv-2020 | 88 | C1 | 1 | I can connect my contribution deftly with what other participants have said. |
+| `C2.INT.co-operating.01` | cefr-cv-2020 | 88 | C2 | 1 | I can skilfully connect contributions, broaden the exchange and guide it toward a result. |

@@ -1,6 +1,6 @@
 # curriculum — the boulingua CEFR descriptor framework
 
-1,170 can-do statements across 7 levels and 77 populated scales out of 79
+1,199 can-do statements across 7 levels and 79 populated scales out of 79
 in-scope scales, each carrying a
 stable id, a citation to the CEFR Companion Volume (2020), and an `implements`
 block naming the domain, scale, level and descriptor ordinal it realizes.
@@ -91,3 +91,12 @@ before a conformance release. See [REFINEMENT.md](REFINEMENT.md).
 Code MIT. The statements are the author's own formulations, oriented on the CEFR
 Companion Volume; no Council of Europe text is reproduced in bulk. See
 `NOTICE.md`.
+
+## Current source restoration
+
+The two omitted scales were restored on 31 October 2026 with 29 additive IDs.
+Their explicit printed pages and source-level ordinals are recorded in each
+statement. Independent source review remains pending in
+[schema/source-restoration-2026-10-31.yml](schema/source-restoration-2026-10-31.yml).
+Structural completeness does not establish pedagogical approval or validate
+course mappings. The canonical course contract is [EQS-1](standards/EQS-1.md).

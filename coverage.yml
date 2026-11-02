@@ -4,23 +4,23 @@ _rule: A cell is a (level, scale) pair where the scale is in_scope. It is popula
   in known-empty-scales.yml with a CV citation.
 levels:
   preA1: 29
-  A1: 56
-  A2: 73
-  B1: 77
-  B2: 77
-  C1: 73
-  C2: 56
+  A1: 57
+  A2: 75
+  B1: 79
+  B2: 79
+  C1: 75
+  C2: 58
 spans:
-  core: 206
-  core-restricted: 165
-  full: 356
-  complete: 412
+  core: 211
+  core-restricted: 167
+  full: 365
+  complete: 423
 statements:
-  total: 1170
+  total: 1199
   preA1: 42
-  A1: 101
-  A2: 238
-  B1: 289
-  B2: 262
-  C1: 154
-  C2: 84
+  A1: 102
+  A2: 243
+  B1: 296
+  B2: 270
+  C1: 159
+  C2: 87

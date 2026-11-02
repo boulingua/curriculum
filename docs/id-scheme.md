@@ -82,3 +82,12 @@ without one is a schema error (`schema/can-do.schema.json`).
 
 `scripts/id-audit.sh` enforces format, global uniqueness, and that every
 `implements:` resolves to a real (scale, level) in `schema/scale-registry.yml`.
+
+## Exact source location for restored descriptors
+
+The additive 31 October 2026 rows additionally carry `source_page` (printed page),
+`source_level` (the explicit printed label, including `B2+`) and `source_ordinal`
+(top-to-bottom row within that label). `descriptor_ordinal` continues to count
+across the base level, so B2+ does not create a new identifier grammar or renumber
+B2 consumers. In Co-operating the two B2+ rows precede the two B2 rows; their base
+B2 ordinals are 1–4 and their printed-label ordinals are 1–2 in each band.

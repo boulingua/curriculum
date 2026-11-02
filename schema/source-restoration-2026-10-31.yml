@@ -1,0 +1,75 @@
+# Historical findings retained to show why these source additions were made.
+observed_before_restoration:
+- domain: PROD
+  scale: addressing-audiences
+  status: missing-in-repository
+  source_levels:
+  - A1
+  - A2
+  - B1
+  - B2
+  - C1
+  - C2
+  checked: 2026-10-30
+  cite: Council of Europe, CEFR Companion Volume (2020), pp. 65–66
+  source: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  found: The official scale contains descriptors. This repository has no statements
+    for it. Pre-A1 has no descriptor; that does not excuse A1 through C2.
+  resolve: Add faithful, independently reviewed statements with stable additive IDs,
+    exact source ordinals and level distinctions. Recompute the crosswalk and coverage
+    together; retain this record until the omission is resolved.
+- domain: INT
+  scale: co-operating
+  status: missing-in-repository
+  source_levels:
+  - A2
+  - B1
+  - B2
+  - C1
+  - C2
+  checked: 2026-10-30
+  cite: Council of Europe, CEFR Companion Volume (2020), pp. 88–89
+  source: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+  found: The official scale contains descriptors, including a B2+ band. This repository
+    has no statements for it. Pre-A1 and A1 have no descriptor.
+  resolve: Add faithful, independently reviewed statements with stable additive IDs.
+    Preserve the distinction between B2 and B2+ in source provenance, then recompute
+    the crosswalk and coverage before removing this record.
+source: https://rm.coe.int/common-european-framework-of-reference-for-languages-learning-teaching/16809ea0d4
+restoration_date: '2026-10-31'
+review_status: pending-editorial-approval
+new_ids:
+- A1.PROD.addressing-audiences.01
+- A2.PROD.addressing-audiences.01
+- A2.PROD.addressing-audiences.02
+- A2.PROD.addressing-audiences.03
+- A2.PROD.addressing-audiences.04
+- B1.PROD.addressing-audiences.01
+- B1.PROD.addressing-audiences.02
+- B1.PROD.addressing-audiences.03
+- B2.PROD.addressing-audiences.01
+- B2.PROD.addressing-audiences.02
+- B2.PROD.addressing-audiences.03
+- B2.PROD.addressing-audiences.04
+- C1.PROD.addressing-audiences.01
+- C1.PROD.addressing-audiences.02
+- C1.PROD.addressing-audiences.03
+- C1.PROD.addressing-audiences.04
+- C2.PROD.addressing-audiences.01
+- C2.PROD.addressing-audiences.02
+- A2.INT.co-operating.01
+- B1.INT.co-operating.01
+- B1.INT.co-operating.02
+- B1.INT.co-operating.03
+- B1.INT.co-operating.04
+- B2.INT.co-operating.01
+- B2.INT.co-operating.02
+- B2.INT.co-operating.03
+- B2.INT.co-operating.04
+- C1.INT.co-operating.01
+- C2.INT.co-operating.01
+
+# Independent text comparison against the official PDF on 2026-10-31 located all
+# 29 rows and confirmed B2+ source labels. Five paraphrases were tightened after
+# that comparison to retain reasons, straightforward complexity, articulate
+# delivery, audience points and inferences. This is not human approval.

@@ -3,9 +3,9 @@
 Evidence for each requirement. Reproduce the audit with `bash scripts/id-audit.sh`.
 
 - [x] **Every CV illustrative scale enumerated and accounted for** — `schema/scale-registry.yml` lists **88** scales (79 in-scope + 9 signing out-of-scope); `docs/coverage-gap-report.md` marks each implemented / out-of-scope / no-official-descriptor.
-- [x] **Every Can-Do has a resolving `implements:`** — **1170** statements, `scripts/id-audit.sh` passes (format + uniqueness + (domain,scale) resolution). Missing: 0.
-- [x] **No official descriptor text reproduced beyond brief attributed quotation** — level files carry Boulingua reformulations; the crosswalk stores only <=12-word attributed gists; the grounding verify-pass asserted `no_bulk_copy`. Policy in `NOTICE.md`.
-- [x] **All seven levels present (Pre-A1 and C2 included)** — A1, A2, B1, B2, C1, C2, preA1. Counts: preA1=42, A1=101, A2=238, B1=289, B2=262, C1=154, C2=84.
+- [x] **Every Can-Do has a resolving `implements:`** — **1199** statements, `scripts/id-audit.sh` passes (format + uniqueness + (domain,scale) resolution). Missing: 0.
+- [x] **Source wording distinguished from authored reformulation** — level files carry Boulingua reformulations; the crosswalk contains brief source gists and authored paraphrases for restored entries. Attributed quotations follow `NOTICE.md`. Source comparison does not replace editorial approval.
+- [x] **All seven levels present (Pre-A1 and C2 included)** — A1, A2, B1, B2, C1, C2, preA1. Counts: preA1=42, A1=102, A2=243, B1=296, B2=270, C1=159, C2=87.
 - [x] **Mediation and plurilingual scales implemented, not stubbed** — MED: 289 statements across 20 scales; PLUR: 52 statements across 3 scales.
 - [x] **ID audit passes** — unique, well-formed, fully resolved (`scripts/id-audit.sh`).
 - [x] **Rubrics traceable to Table 3 / CV analytic scales** — `assessment/rubrics/speaking-analytic.md` bands the six Appendix 3 aspects via their CV scales.
@@ -15,5 +15,11 @@ Evidence for each requirement. Reproduce the audit with `bash scripts/id-audit.s
 ## Numbers
 
 - Scales: 88 total, 79 in-scope, 9 signing (out of scope).
-- Grounded Can-Do statements: **1170**.
-- By level: preA1 42, A1 101, A2 238, B1 289, B2 262, C1 154, C2 84.
+- Grounded Can-Do statements: **1199** (1170 preserved entries and 29 additive restorations).
+- By level: preA1 42, A1 102, A2 243, B1 296, B2 270, C1 159, C2 87.
+
+The counts were refreshed on 2 November 2026. The 29 restorations populate
+Addressing audiences and Co-operating; source pages, ordinals and B2+ distinctions
+are recorded in `schema/source-restoration-2026-10-31.yml`. Their independent
+text comparison is complete, while editorial approval remains pending. Framework
+population does not establish a course's task coverage or approve its mappings.

@@ -1,0 +1,50 @@
+version: 1
+standard: EQS-1
+status: normative
+basis: ADR-0014
+steps: [activate, input, practise, apply, reflect]
+front_matter:
+  steps: ordered-list-of-canonical-keys
+  heading_key: explicit-markdown-anchor
+  exam_page: relative-content-path-without-index-or-extension
+  review_status: [pending, approved, changes-required]
+bands:
+  I:
+    levels: [preA1, A1, A2]
+    klassenstufen: [5, 6, 7]
+    unit_words: {minimum: 950, maximum: 1500}
+    exam_characters: {minimum: 1900}
+  II:
+    levels: [B1, B2]
+    klassenstufen: [8, 9, 10]
+    unit_words: {minimum: 1000, maximum: 1800}
+    exam_characters: {minimum: 1900}
+  III:
+    levels: [C1, C2]
+    klassenstufen: [11, 12, 13]
+    unit_words: {minimum: 1500, maximum: 2800}
+    exam_characters: {minimum: 2200}
+counting:
+  band_precedence: klassenstufe-then-curriculum-level
+  unit_scope: learner-body-through-reflect
+  exclude_sections: [exam, teacher_notes, sources, downloads, alignment]
+  exclude: [front-matter, shortcode-delimiters, fenced-code, html-tags, markdown-markup, answer-keys]
+  include: [headings, prose, tasks, table-cell-text, link-labels, image-alternative-text]
+  word_token: unicode-letter-or-number-runs-with-internal-apostrophes-or-hyphens
+  exam_scope: learner-facing-rendered-main-content
+  exam_exclude: [navigation, footer, teacher-notes, answer-keys, downloads, sources]
+  whitespace: collapse-to-single-spaces-and-trim
+  exam_character_unit: unicode-codepoints-including-interword-spaces
+assessment:
+  sibling_exams_per_unit: 1
+  embedded_exam: pointer-only
+  pointer_fields: [page, format, duration_minutes, points, skills]
+  answer_keys: details-shortcode
+  learner_materials_include_keys: false
+  teacher_materials_include_keys: true
+  points: sum-of-explicit-task-maxima
+review:
+  pedagogical_checks: [level-fit, usable-input, task-outcome, progression, differentiation, feedback, source-rights]
+  mappings: asserted-only-after-task-evidence-review
+  audio: reviewed-recording-or-explicit-transcript-only
+  no_padding: true

@@ -1,0 +1,36 @@
+version: 1
+status: authoring-contract
+certification: none
+# Criteria identify relevant framework scales; actual evidence is task-specific.
+# No CEFR level is assigned by a numeric score alone.
+rubrics:
+  speaking:
+    reference: speaking-analytic.md
+    criteria:
+      range: LING.general-linguistic-range
+      accuracy: LING.grammatical-accuracy
+      fluency: PRAG.fluency
+      interaction: PRAG.turntaking
+      coherence: PRAG.coherence-and-cohesion
+      phonology: LING.phonological-control
+  writing:
+    criteria:
+      task_completion: task-specific-reviewed-implements
+      organisation: PRAG.thematic-development
+      cohesion: PRAG.coherence-and-cohesion
+      vocabulary: LING.vocabulary-range
+      accuracy: LING.grammatical-accuracy
+      orthography: LING.orthographic-control
+  mediation:
+    criteria:
+      task_completion: task-specific-reviewed-implements
+      accuracy_of_message: source-content-comparison
+      audience_adaptation: MED.adapting-language
+      collaboration: MED.collaborating-to-construct-meaning
+application:
+  required_fields: [task, criteria, maximum_points, marking_guidance]
+  criterion_fields: [criterion, maximum_points, evidence_for_credit]
+  point_total: sum-of-criterion-maxima
+  unsupported_scale_at_level: select-applicable-reviewed-descriptor-or-explain-task-specific-criterion
+  missing_evidence: do-not-award-credit-by-assumption
+  level_inference: forbidden-from-score-alone

@@ -1,7 +1,7 @@
 name: framework
 on:
   push:
-    branches: [main]
+    branches: [main, 'refine/**']
   pull_request:
   workflow_dispatch:
 permissions:

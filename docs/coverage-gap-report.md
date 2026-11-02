@@ -1,11 +1,11 @@
 # Coverage / gap report
 
-Proves every CEFR CV (2020) illustrative scale is accounted for: **implemented**, **out-of-scope (with reason)**, or, per level, **no-official-descriptor**. A silently missing scale would be a conformance failure — none are missing.
+Records repository coverage of the registered CEFR scales. This structural inventory is not proof that every reformulation faithfully represents the source. The 29 restored rows await independent source review; other existing empty cells have not been re-reviewed in this repair.
 
 - CV illustrative scales total: **88** (from the CV table of contents).
-- In-scope (spoken/written): **79** — implemented: **77**.
+- In-scope (spoken/written): **79** — implemented: **79**.
 - Out-of-scope (signing competences): **9** — catalogued, no IDs.
-- Statements authored: **1170**, grounded in the CV2020.
+- Statements authored: **1199**, grounded in the CV2020.
 
 ## In-scope scales — level coverage
 
@@ -31,7 +31,7 @@ Proves every CEFR CV (2020) illustrative scale is accounted for: **implemented**
 | PROD | Sustained Monologue: Giving Information | · | ● | ● | ● | ● | ● | · |
 | PROD | Sustained Monologue: Putting A Case (E.G. In A Debate) | · | · | ● | ● | ● | ● | · |
 | PROD | Public Announcements | · | · | ● | ● | ● | ● | · |
-| PROD | Addressing Audiences | · | · | · | · | · | · | · |
+| PROD | Addressing Audiences | · | ● | ● | ● | ● | ● | ● |
 | PROD | Overall Written Production | ● | ● | ● | ● | ● | ● | ● |
 | PROD | Creative Writing | · | ● | ● | ● | ● | ● | ● |
 | PROD | Reports And Essays | · | · | ● | ● | ● | ● | ● |
@@ -54,7 +54,7 @@ Proves every CEFR CV (2020) illustrative scale is accounted for: **implemented**
 | INT | Online Conversation And Discussion | ● | ● | ● | ● | ● | ● | ● |
 | INT | Goal-Oriented Online Transactions And Collaboration | ● | ● | ● | ● | ● | ● | ● |
 | INT | Turntaking | · | · | ● | ● | ● | ● | · |
-| INT | Co-Operating | · | · | · | · | · | · | · |
+| INT | Co-Operating | · | · | ● | ● | ● | ● | ● |
 | INT | Asking For Clarification | · | ● | ● | ● | ● | ● | · |
 | MED | Overall Mediation | · | ● | ● | ● | ● | ● | ● |
 | MED | Relaying Specific Information | ● | ● | ● | ● | ● | ● | · |

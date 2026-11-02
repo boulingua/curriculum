@@ -102,7 +102,18 @@ def load_excused() -> dict[tuple[str, str], dict]:
     realize a descriptor that does not exist. The distinction that matters is
     whether the emptiness was CHECKED (empty-in-cv, cited) or merely observed
     (pending), and that shows up as a warning rather than a silent pass."""
-    return load_empty_scales()
+    return {key: row for key, row in load_empty_scales().items()
+            if row.get('status') == 'empty-in-cv'}
+
+
+def pending_source_reviews() -> list[dict]:
+    """Restoration is structural work; an unreviewed repair is not source approval."""
+    records = []
+    for path in sorted((ROOT / 'schema').glob('source-restoration-*.yml')):
+        record = yaml.safe_load(path.read_text()) or {}
+        if record.get('review_status') != 'reviewed':
+            records.append(record)
+    return records
 
 
 def cells() -> tuple[dict[str, set], dict[str, set]]:
@@ -125,7 +136,7 @@ def cells() -> tuple[dict[str, set], dict[str, set]]:
 # ── self-audit ──────────────────────────────────────────────────────────────
 def cmd_self_audit(a) -> int:
     reg, sts = load_registry(), load_statements()
-    excused = load_excused()
+    excused = load_empty_scales()
     bad = 0
     seen: set[str] = set()
     schema = json.loads((ROOT / 'schema/can-do.schema.json').read_text())
@@ -155,6 +166,14 @@ def cmd_self_audit(a) -> int:
         if (dom, scale) not in reg:
             print(f"::error::{sid} names no scale in scale-registry.yml")
             bad += 1
+        if imp.get('source_level', lv).rstrip('+') != lv:
+            print(f"::error::{sid}: printed source level disagrees with base level")
+            bad += 1
+    crosswalk = (ROOT / 'docs/descriptor-crosswalk.md').read_text()
+    crosswalk_ids = re.findall(r'^\| `([^`]+)` \|', crosswalk, re.M)
+    if set(crosswalk_ids) != seen or len(crosswalk_ids) != len(set(crosswalk_ids)):
+        print('::error::descriptor crosswalk must contain each framework ID exactly once')
+        bad += 1
     print(f"  {len(sts)} statements, {len(seen)} unique ids, "
           f"{len([r for r in reg.values() if r.get('in_scope')])} in-scope scales")
 
@@ -189,6 +208,8 @@ def cmd_self_audit(a) -> int:
     if bad:
         print(f"\nself-audit FAIL — {bad} problem(s)", file=sys.stderr)
         return 3
+    for review in pending_source_reviews():
+        print(f"::warning::source restoration {review.get('restoration_date')}: {review.get('review_status', 'review status missing')}")
     print("self-audit OK")
     return 0
 
@@ -236,6 +257,12 @@ def cmd_resolve(a) -> int:
         print('::error::levels_claimed contains a level outside the target span')
         return 2
     if status == 'met':
+        for review in pending_source_reviews():
+            if any(ID_RE.fullmatch(sid) and ID_RE.fullmatch(sid).group(1) in span
+                   and (ID_RE.fullmatch(sid).group(2), ID_RE.fullmatch(sid).group(3)) not in excluded
+                   for sid in review.get('new_ids', [])):
+                print('::error::restored framework source rows still require recorded source/editorial approval before a met claim')
+                return 5
         unresolved = [(key, row) for key, row in load_empty_scales().items()
                       if row.get('status') != 'empty-in-cv' and key not in excluded
                       and set(row.get('source_levels', span)) & set(span)]

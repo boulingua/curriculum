@@ -21,10 +21,11 @@ class Resolution(unittest.TestCase):
         self.page.write_text(f'---\ncurriculum:\n  level: A1\n  implements: [{ID}]\n  implements_basis: proposed\n---\nA lesson.\n')
         self.man={'framework':'boulingua-curriculum','framework_version':'1.2.0','language':'en','declared_conformance':'core','conformance_status':'in-progress','realizations':[{'implements_id':ID,'page':'lesson'}]}
         self.path=self.root/'curriculum.yml'
+        self.pending_reviews=[]
     def tearDown(self):self.temp.cleanup()
     def resolve(self, content=True):
         self.path.write_text(yaml.safe_dump(self.man))
-        with contextlib.redirect_stdout(io.StringIO()),contextlib.redirect_stderr(io.StringIO()):
+        with contextlib.redirect_stdout(io.StringIO()),contextlib.redirect_stderr(io.StringIO()), patch.object(audit,'pending_source_reviews',return_value=self.pending_reviews):
             return audit.cmd_resolve(SimpleNamespace(manifest=self.path,content=self.content if content else None))
     def test_in_progress_correct_mapping(self):self.assertEqual(self.resolve(),0)
     def test_wrong_page_cannot_hide_behind_same_global_id(self):
@@ -69,6 +70,27 @@ class Resolution(unittest.TestCase):
             self.assertEqual(self.resolve(),5)
     def test_framework_version_is_exact(self):
         self.man['framework_version']='1.1.0';self.assertEqual(self.resolve(),6)
+    def test_restored_but_unreviewed_source_blocks_only_achieved_claim(self):
+        self.pending_reviews=[{'new_ids':['A2.INT.co-operating.01']}]
+        self.assertEqual(self.resolve(),0)
+        self.man['conformance_status']='met'
+        self.assertEqual(self.resolve(),5)
+
+
+class SourceIntegrity(unittest.TestCase):
+    def test_restored_scales_have_the_source_rows_at_each_level(self):
+        statements=audit.load_statements()
+        expected={'PROD.addressing-audiences':{'A1':1,'A2':4,'B1':3,'B2':4,'C1':4,'C2':2},
+                  'INT.co-operating':{'A2':1,'B1':4,'B2':4,'C1':1,'C2':1}}
+        for key,levels in expected.items():
+            rows=[s for s in statements if '.'.join(s['id'].split('.')[1:3])==key]
+            self.assertEqual({lv:sum(s['implements']['level']==lv for s in rows) for lv in audit.LEVELS if any(s['implements']['level']==lv for s in rows)},levels)
+            self.assertTrue(all(s['implements'].get('source_page') in {65,66,88,89} for s in rows))
+        b2=[s['implements'] for s in statements if s['id'].startswith('B2.INT.co-operating.')]
+        self.assertEqual([(r['source_level'],r['source_ordinal']) for r in b2],[('B2+',1),('B2+',2),('B2',1),('B2',2)])
+    def test_pending_omission_is_never_a_coverage_exemption(self):
+        with patch.object(audit,'load_empty_scales',return_value={('INT','co-operating'):{'status':'missing-in-repository'}}):
+            self.assertEqual(audit.load_excused(),{})
 
 
 if __name__=='__main__':unittest.main()
