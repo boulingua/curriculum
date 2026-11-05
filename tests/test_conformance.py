@@ -19,7 +19,7 @@ class Resolution(unittest.TestCase):
         self.content=self.root/'content';self.content.mkdir()
         self.page=self.content/'lesson.md'
         self.page.write_text(f'---\ncurriculum:\n  level: A1\n  implements: [{ID}]\n  implements_basis: proposed\n---\nA lesson.\n')
-        self.man={'framework':'boulingua-curriculum','framework_version':'1.2.0','language':'en','declared_conformance':'core','conformance_status':'in-progress','realizations':[{'implements_id':ID,'page':'lesson'}]}
+        self.man={'framework':'boulingua-curriculum','framework_version':(Path(__file__).resolve().parents[1]/'VERSION').read_text().strip(),'language':'en','declared_conformance':'core','conformance_status':'in-progress','realizations':[{'implements_id':ID,'page':'lesson'}]}
         self.path=self.root/'curriculum.yml'
         self.pending_reviews=[]
     def tearDown(self):self.temp.cleanup()
